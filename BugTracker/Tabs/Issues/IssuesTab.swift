@@ -11,7 +11,12 @@ import SwiftUI
 struct IssuesTab: View {
 
 @State var createTicket = false
-@EnvironmentObject var issueObject: IssueHelper
+
+//uncomment when running
+//@EnvironmentObject var issueObject: IssueHelper
+    
+//comment out when not needing preview. This is just for preview
+@State var issueObject = IssueHelper(withListner: true)
     
     var body: some View {
 
@@ -34,16 +39,47 @@ struct IssuesTab: View {
             Spacer()
             
             List(issueObject.tickets) { listIssue in
-                Text("\(listIssue.title ?? "Untitled")")
+                VStack {
+                    HStack {
+                        IssueTypeIcon(type: listIssue.type)
+                        //Text("\(listIssue.type.rawValue)")
+                            //.foregroundColor(self.colorForType(type: listIssue.type))
+                            
+                        Text("\(listIssue.title ?? "Untitled")")
+                        Spacer()
+                    }
+                    HStack {
+                       Spacer()
+                       Text("\(self.issueObject.stringForTimestamp(issue: listIssue))")
+                        .font(Font(UIFont.monospacedSystemFont(ofSize: 12, weight: .light)))
+                        .padding(.trailing, CGFloat(6.0))
+                        
+                    }
+                }
+            }
+            
+            HStack {
+                Spacer()
+                Text("issues: \(self.issueObject.tickets.count)")
+                    
             }
             
         }
         
     }
+    
+    
+
+    
 }
 
 struct IssuesTab_Previews: PreviewProvider {
+    
+    var issueObject: [String] = ["1","2","3"]
+    @State var createTicket = false
+    
     static var previews: some View {
         IssuesTab()
+ 
     }
 }

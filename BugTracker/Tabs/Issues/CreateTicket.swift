@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 struct CreateTicket: View {
 
     @State var title = ""
@@ -120,7 +121,7 @@ struct CreateTicket: View {
                                 sprintID: nil,
                                 epicID: nil,
                                 status: .open,
-                                timestamp: Date())
+                                timestamp: Timestamp(date: Date()))
         
 //          helper.saveIssue(ticket: newTicket)
         issueObject.saveIssue(ticket: newTicket)

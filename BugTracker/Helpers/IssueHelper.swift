@@ -51,7 +51,7 @@ class IssueHelper: ObservableObject {
                                      sprintID: nil,
                                      epicID: nil,
                                      status: issueStatus.init(rawValue: statusString) ?? issueStatus.open,
-                                     timestamp: Date())
+                                     timestamp: Timestamp(date:Date()))
                 
                 
                 self.tickets.append(newIssue)
@@ -84,7 +84,7 @@ class IssueHelper: ObservableObject {
                 sprintID: nil,
                 epicID: nil,
                 status: .open,
-                timestamp: Date())
+                timestamp: Timestamp(date:Date()))
                 
                 do {
               try db.collection("Tickets").document("\(tempTicket.issueID)").setData(from: tempTicket)
@@ -107,6 +107,19 @@ class IssueHelper: ObservableObject {
     }
     
     func handleCreateIssueError() {
+        
+    }
+    
+    func stringForTimestamp(issue: issue) -> String {
+        
+        let issueStamp = issue.timestamp
+        let date = issueStamp.dateValue() as Date
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM.d, yyyy h:mma"
+        let dateString = formatter.string(from: date).lowercased()
+        
+        return dateString
+        
         
     }
     

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 enum issueType: String, CaseIterable, Codable {
     case none = "none"
@@ -16,6 +16,7 @@ enum issueType: String, CaseIterable, Codable {
     case question = "question"
     case support = "support"
     
+
     static let allValues: [String] = [none.rawValue,
                                       bug.rawValue,
                                       feature.rawValue,
@@ -27,5 +28,23 @@ enum issueType: String, CaseIterable, Codable {
                                                        feature.rawValue:.feature,
                                                        question.rawValue:.question,
                                                        support.rawValue:.support]
+  
+    func colorForType(type: issueType) -> Color {
+        
+        switch type {
+        case .bug:
+            return .red
+        case .none:
+            return .gray
+        case .feature:
+            return .orange
+        case .question:
+            return .green
+        case .support:
+            return .blue
+        
+        }
+    }
+    
     
 }

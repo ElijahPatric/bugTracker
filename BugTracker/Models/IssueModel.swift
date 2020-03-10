@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import FirebaseFirestore
 struct issue: Codable, Identifiable {
     var id:Int {
         get {
@@ -23,5 +23,7 @@ struct issue: Codable, Identifiable {
     var sprintID: Int?
     var epicID: Int?
     var status: issueStatus
-    var timestamp: Date
+    var timestamp: Timestamp
+    
+    
 }
