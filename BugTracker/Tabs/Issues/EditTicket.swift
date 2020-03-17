@@ -1,15 +1,18 @@
 //
-//  CreateTicket.swift
+//  EditTicket.swift
 //  BugTracker
 //
-//  Created by Elijah on 2/11/20.
+//  Created by Elijah on 3/11/20.
 //  Copyright © 2020 Elijah Patric. All rights reserved.
 //
 
 import SwiftUI
 import FirebaseFirestore
-struct CreateTicket: View {
 
+struct EditTicket: View {
+    
+    @State var editIssue: issue
+    
     @State var title = ""
     @State var description = ""
     @State var selectedTypeIndex = 0
@@ -20,10 +23,7 @@ struct CreateTicket: View {
     @State var isSelected = false
     @State var selectedTitle = ""
     @State private var scale: CGFloat = 1.2
-    
-    @Binding var isPresented: Bool
-    @EnvironmentObject var issueObject: IssueHelper
-
+    @State var counter = 0
     var storyPoints: Int {
         get {
             if let points = Int(self.storyPointsString) {
@@ -33,18 +33,22 @@ struct CreateTicket: View {
             }
         }
     }
+    
+    @Binding var isPresented: Bool
+    @EnvironmentObject var issueObject: IssueHelper
+    
     let issueTypesArray: [String] = issueType.allValues
-//    let helper = IssueHelper(withListner:false)
     
     var body: some View {
+        //////////////
         VStack {
             NavigationView {
                 Form {
                     Section {
-                        TextField("Title", text: $title)
+                        TextField("\(self.editIssue.title ?? "Title")", text: $title)
                     }
                     Section {
-                        TextField("Description", text: $description)
+                        TextField("\(self.editIssue.description ?? "description")", text: $description)
                         .lineLimit(nil)
                     }
                     Section {
@@ -53,12 +57,21 @@ struct CreateTicket: View {
                                 
                                 ForEach(0..<self.issueTypesArray.count) { counter in
                                     IssueTypeElement(titleText: self.issueTypesArray[counter]) { () -> ()? in
+                                        self.counter += 1
                                         self.isSelected = true
                                         self.selectedTitle = self.issueTypesArray[counter]
-                                        self.selectedTypeString = self.issueTypesArray[counter]
+                                        self.selectedTypeString =
+                                            self.issueTypesArray[counter]
+                                        
+                                        
                                         
                                         return nil
                                     }.scaleEffect(self.isSelected && self.selectedTitle == self.issueTypesArray[counter] ? self.scale : 1)
+                                        .onAppear {
+                                            if self.issueTypesArray[counter] == self.editIssue.type.rawValue {
+                                                self.isSelected = true
+                                            }
+                                    }
                                 }
                                 
                             }
@@ -71,7 +84,7 @@ struct CreateTicket: View {
                     Section {
                         VStack {
                             Picker(selection: $sprint, label: Text("Sprint")) {
-                                ForEach(0..<4) {_ in 
+                                ForEach(0..<4) {_ in
                                     Text("Sprints")
                                 }
                             }
@@ -87,42 +100,58 @@ struct CreateTicket: View {
                         }
                     }
             
-                }.navigationBarTitle("Create Issue")
+                }.navigationBarTitle("Edit Issue")
                 
+            }.onAppear {
+                //will need to set epic and sprint when that is implemented
+                self.storyPointsString = String(self.editIssue.points!)
             }
             
             Button(action: {
-                self.saveTicket()
+             //   self.saveTicket()
                 self.isPresented = false
             }) {
-                Text("Create Issue")
+                Text("Save Edits")
             }
             
         }
     }
     
-    func saveTicket() {
-        
-        let newTicket = issue(title: self.title,
-                                description: self.description,
-                                issueID: 0,
-                                points: self.storyPoints,
-                                assignee: nil,
-                                type: issueType(rawValue: self.selectedTypeString) ?? .none,
-                                sprintID: nil,
-                                epicID: nil,
-                                status: .open,
-                                timestamp: Timestamp(date: Date()))
-        
-//          helper.saveIssue(ticket: newTicket)
-        issueObject.saveIssue(ticket: newTicket)
-    }
-    
-}
+        func saveTicket() {
+            
+            let newTicket = issue(title: self.title,
+                                    description: self.description,
+                                    issueID: self.editIssue.id,
+                                    points: self.storyPoints,
+                                    assignee: nil,
+                                    type: issueType(rawValue: self.selectedTypeString) ?? .none,
+                                    sprintID: nil,
+                                    epicID: nil,
+                                    status: .open,
+                                    timestamp: self.editIssue.timestamp)
+            
+    //          helper.saveIssue(ticket: newTicket)
+            issueObject.saveIssue(ticket: newTicket)
+        }
 
-struct CreateTicket_Previews: PreviewProvider {
+}
+        //////////////////
+    
+
+
+struct EditTicket_Previews: PreviewProvider {
     @State static var isPresented = true
     static var previews: some View {
-        CreateTicket(isPresented: $isPresented)
+        EditTicket(editIssue: issue(title: "Preview Title",
+                                    description: "Preview Description",
+                                    issueID: 99,
+                                    points: 2,
+                                    assignee: nil,
+                                    type: .feature,
+                                    sprintID: nil,
+                                    epicID: nil,
+                                    status: .open,
+                                    timestamp: Timestamp(date: Date())),
+                   isPresented: $isPresented)
     }
 }

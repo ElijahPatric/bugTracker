@@ -8,7 +8,18 @@
 
 import Foundation
 import FirebaseFirestore
-struct issue: Codable, Identifiable {
+struct issue: Codable, Identifiable, Hashable {
+    
+    
+    static func == (lhs: issue, rhs: issue) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
+    }
+    
     var id:Int {
         get {
             return issueID

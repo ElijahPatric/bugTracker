@@ -11,13 +11,14 @@ import SwiftUI
 struct IssuesTab: View {
 
 @State var createTicket = false
-
+@State var selectedIssue: issue? = nil
+    
 //uncomment when running
 //@EnvironmentObject var issueObject: IssueHelper
     
 //comment out when not needing preview. This is just for preview
 @State var issueObject = IssueHelper(withListner: true)
-    
+  
     var body: some View {
 
         VStack {
@@ -31,14 +32,16 @@ struct IssuesTab: View {
                         .multilineTextAlignment(.center)
                         }.padding(.leading, CGFloat(8.0))
                         .sheet(isPresented: $createTicket) { CreateTicket(isPresented: self.$createTicket).environmentObject(self.issueObject)
-                            
+
                     }
-                    
+
                 }
             }
+            
+            
             Spacer()
             
-            List(issueObject.tickets) { listIssue in
+            List(issueObject.tickets,selection: $selectedIssue!) { listIssue in
                 VStack {
                     HStack {
                         IssueTypeIcon(type: listIssue.type)

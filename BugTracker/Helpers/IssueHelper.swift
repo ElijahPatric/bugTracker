@@ -63,7 +63,7 @@ class IssueHelper: ObservableObject {
         
     }
 
-    func saveIssue(ticket: issue) {
+    func saveIssue(ticket: issue, existingIssue: Bool = false) {
         let db = Firestore.firestore()
         let docRef = db.collection("AppData").document("HighestTicketNumber")
         
@@ -71,9 +71,15 @@ class IssueHelper: ObservableObject {
             
             if let document = document, document.exists {
                 
+                //get a new id number for this new issue
                 let dataDescription = document.data() as? [String:Int]
                 guard dataDescription != nil else {self.handleNoDataDescription();return}
-                let topNumber = dataDescription!["TopNumber"]!
+                var topNumber = dataDescription!["TopNumber"]!
+                
+                //if existing issue, use same id, otherwise it would make a new issue
+                if existingIssue == true {
+                    topNumber = ticket.issueID
+                }
                 
                 let tempTicket = issue(title: ticket.title,
                 description: ticket.description,

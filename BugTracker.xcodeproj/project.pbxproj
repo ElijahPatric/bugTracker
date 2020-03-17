@@ -11,6 +11,7 @@
 		9BF7E3E636F2DC87E5D4BAC7 /* Pods_BugTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0072604D52B3883E474E358F /* Pods_BugTrackerTests.framework */; };
 		CF126F6423F37C25008D5605 /* CreateTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF126F6323F37C25008D5605 /* CreateTicket.swift */; };
 		CF55D87C23F8D6D70068B877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */; };
+		CF6E82962419CAC000D2BD50 /* EditTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E82952419CAC000D2BD50 /* EditTicket.swift */; };
 		CF7232CD24147D7B002A83B0 /* IssueTypeIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7232CC24147D7B002A83B0 /* IssueTypeIcon.swift */; };
 		CFA5663523ED0E0A00800681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5663423ED0E0A00800681 /* AppDelegate.swift */; };
 		CFA5663723ED0E0A00800681 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5663623ED0E0A00800681 /* SceneDelegate.swift */; };
@@ -61,6 +62,7 @@
 		A14E31C25FB80550E0B1CA86 /* Pods-BugTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BugTrackerTests.release.xcconfig"; path = "Target Support Files/Pods-BugTrackerTests/Pods-BugTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
 		CF126F6323F37C25008D5605 /* CreateTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTicket.swift; sourceTree = "<group>"; };
 		CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CF6E82952419CAC000D2BD50 /* EditTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTicket.swift; sourceTree = "<group>"; };
 		CF7232CC24147D7B002A83B0 /* IssueTypeIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTypeIcon.swift; sourceTree = "<group>"; };
 		CFA5663123ED0E0A00800681 /* BugTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFA5663423ED0E0A00800681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -132,11 +134,28 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CF6E82932419C87C00D2BD50 /* Sprint */ = {
+			isa = PBXGroup;
+			children = (
+				CFBC586023F24AC2008AA923 /* SprintTab.swift */,
+			);
+			path = Sprint;
+			sourceTree = "<group>";
+		};
+		CF6E82942419C8D800D2BD50 /* Epic */ = {
+			isa = PBXGroup;
+			children = (
+				CFBC586223F24ADD008AA923 /* EpicsTab.swift */,
+			);
+			path = Epic;
+			sourceTree = "<group>";
+		};
 		CF89996123FCDA5F005552A2 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
 				CF126F6323F37C25008D5605 /* CreateTicket.swift */,
 				CFBC585E23F24AA7008AA923 /* IssuesTab.swift */,
+				CF6E82952419CAC000D2BD50 /* EditTicket.swift */,
 			);
 			path = Issues;
 			sourceTree = "<group>";
@@ -212,9 +231,9 @@
 		CFBC586423F24D00008AA923 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				CF6E82932419C87C00D2BD50 /* Sprint */,
 				CF89996123FCDA5F005552A2 /* Issues */,
-				CFBC586023F24AC2008AA923 /* SprintTab.swift */,
-				CFBC586223F24ADD008AA923 /* EpicsTab.swift */,
+				CF6E82942419C8D800D2BD50 /* Epic */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -503,6 +522,7 @@
 				CF7232CD24147D7B002A83B0 /* IssueTypeIcon.swift in Sources */,
 				CFBC586323F24ADD008AA923 /* EpicsTab.swift in Sources */,
 				CFBC585F23F24AA7008AA923 /* IssuesTab.swift in Sources */,
+				CF6E82962419CAC000D2BD50 /* EditTicket.swift in Sources */,
 				CFA5663723ED0E0A00800681 /* SceneDelegate.swift in Sources */,
 				CFA5663C23ED0E0A00800681 /* ContentView.swift in Sources */,
 				CFE91CA523F8DF5B004D21DE /* IssueHelper.swift in Sources */,

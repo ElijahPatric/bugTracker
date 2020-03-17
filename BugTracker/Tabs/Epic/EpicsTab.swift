@@ -1,5 +1,5 @@
 //
-//  SprintTab.swift
+//  EpicsTab.swift
 //  BugTracker
 //
 //  Created by Elijah on 2/10/20.
@@ -8,14 +8,14 @@
 
 import SwiftUI
 
-struct SprintTab: View {
+struct EpicsTab: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Hello, Epics!")
     }
 }
 
-struct SprintTab_Previews: PreviewProvider {
+struct EpicsTab_Previews: PreviewProvider {
     static var previews: some View {
-        SprintTab()
+        EpicsTab()
     }
 }
