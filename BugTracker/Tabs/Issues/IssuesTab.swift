@@ -11,13 +11,13 @@ import SwiftUI
 struct IssuesTab: View {
 
 @State var createTicket = false
-@State var selectedIssue: issue? = nil
-    
+@State var selectedIssue: issue?
+@State var issueIsSelected: Bool = false
 //uncomment when running
-//@EnvironmentObject var issueObject: IssueHelper
+@EnvironmentObject var issueObject: IssueHelper
     
 //comment out when not needing preview. This is just for preview
-@State var issueObject = IssueHelper(withListner: true)
+//@State var issueObject = IssueHelper(withListner: true)
   
     var body: some View {
 
@@ -32,7 +32,7 @@ struct IssuesTab: View {
                         .multilineTextAlignment(.center)
                         }.padding(.leading, CGFloat(8.0))
                         .sheet(isPresented: $createTicket) { CreateTicket(isPresented: self.$createTicket).environmentObject(self.issueObject)
-
+                    
                     }
 
                 }
@@ -41,7 +41,7 @@ struct IssuesTab: View {
             
             Spacer()
             
-            List(issueObject.tickets,selection: $selectedIssue!) { listIssue in
+            List(issueObject.tickets,selection: $selectedIssue) { listIssue in
                 VStack {
                     HStack {
                         IssueTypeIcon(type: listIssue.type)
@@ -58,8 +58,15 @@ struct IssuesTab: View {
                         .padding(.trailing, CGFloat(6.0))
                         
                     }
+                }.onTapGesture {
+                    print("item tapped")
+                    self.selectedIssue = listIssue
+                    self.issueIsSelected.toggle()
+                    print("issue is selected: \(self.issueIsSelected)")
+                    
+                    }
                 }
-            }
+            }.sheet(isPresented: self.$issueIsSelected) { EditTicket(editIssue: self.$selectedIssue).environmentObject(self.issueObject)
             
             HStack {
                 Spacer()

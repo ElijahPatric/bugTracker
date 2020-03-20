@@ -11,8 +11,9 @@ import FirebaseFirestore
 
 struct EditTicket: View {
     
-    @State var editIssue: issue
-    
+    @Binding var editIssue: issue?
+    //@Binding var isPresented: Bool
+
     @State var title = ""
     @State var description = ""
     @State var selectedTypeIndex = 0
@@ -34,7 +35,6 @@ struct EditTicket: View {
         }
     }
     
-    @Binding var isPresented: Bool
     @EnvironmentObject var issueObject: IssueHelper
     
     let issueTypesArray: [String] = issueType.allValues
@@ -45,16 +45,18 @@ struct EditTicket: View {
             NavigationView {
                 Form {
                     Section {
-                        TextField("\(self.editIssue.title ?? "Title")", text: $title)
+                        TextField("\(self.editIssue!.title ?? "Title")", text: $title)
+                            
                     }
                     Section {
-                        TextField("\(self.editIssue.description ?? "description")", text: $description)
+                        TextField("\(self.editIssue!.description ?? "description")", text: $description)
                         .lineLimit(nil)
                     }
                     Section {
                         ScrollView(.horizontal,showsIndicators: false) {
                             HStack {
                                 
+                                //list of possible issue types. Existing one pre-selected
                                 ForEach(0..<self.issueTypesArray.count) { counter in
                                     IssueTypeElement(titleText: self.issueTypesArray[counter]) { () -> ()? in
                                         self.counter += 1
@@ -63,12 +65,11 @@ struct EditTicket: View {
                                         self.selectedTypeString =
                                             self.issueTypesArray[counter]
                                         
-                                        
-                                        
                                         return nil
-                                    }.scaleEffect(self.isSelected && self.selectedTitle == self.issueTypesArray[counter] ? self.scale : 1)
+                                    }.scaleEffect(self.isSelected && self.selectedTypeString == self.issueTypesArray[counter] ? self.scale : 1)
                                         .onAppear {
-                                            if self.issueTypesArray[counter] == self.editIssue.type.rawValue {
+                                            if self.issueTypesArray[counter] == self.editIssue!.type.rawValue {
+                                                self.selectedTypeString = self.issueTypesArray[counter]
                                                 self.isSelected = true
                                             }
                                     }
@@ -104,12 +105,15 @@ struct EditTicket: View {
                 
             }.onAppear {
                 //will need to set epic and sprint when that is implemented
-                self.storyPointsString = String(self.editIssue.points!)
+                self.title = self.editIssue!.title ?? "Title of Issue"
+                self.storyPointsString = String(self.editIssue!.points!)
+                self.description = self.editIssue!.description ?? "description"
+                
             }
             
             Button(action: {
-             //   self.saveTicket()
-                self.isPresented = false
+                self.saveTicket()
+             //   self.isPresented = false
             }) {
                 Text("Save Edits")
             }
@@ -121,17 +125,17 @@ struct EditTicket: View {
             
             let newTicket = issue(title: self.title,
                                     description: self.description,
-                                    issueID: self.editIssue.id,
+                                    issueID: self.editIssue!.id,
                                     points: self.storyPoints,
                                     assignee: nil,
                                     type: issueType(rawValue: self.selectedTypeString) ?? .none,
                                     sprintID: nil,
                                     epicID: nil,
                                     status: .open,
-                                    timestamp: self.editIssue.timestamp)
+                                    timestamp: self.editIssue!.timestamp)
             
     //          helper.saveIssue(ticket: newTicket)
-            issueObject.saveIssue(ticket: newTicket)
+            issueObject.saveIssue(ticket: newTicket,existingIssue: true)
         }
 
 }
@@ -139,19 +143,19 @@ struct EditTicket: View {
     
 
 
-struct EditTicket_Previews: PreviewProvider {
-    @State static var isPresented = true
-    static var previews: some View {
-        EditTicket(editIssue: issue(title: "Preview Title",
-                                    description: "Preview Description",
-                                    issueID: 99,
-                                    points: 2,
-                                    assignee: nil,
-                                    type: .feature,
-                                    sprintID: nil,
-                                    epicID: nil,
-                                    status: .open,
-                                    timestamp: Timestamp(date: Date())),
-                   isPresented: $isPresented)
-    }
-}
+//struct EditTicket_Previews: PreviewProvider {
+//    @State static var isPresented = true
+//    static var previews: some View {
+//        EditTicket(editIssue: issue(title: "Preview Title",
+//                                    description: "Preview Description",
+//                                    issueID: 99,
+//                                    points: 2,
+//                                    assignee: nil,
+//                                    type: .feature,
+//                                    sprintID: nil,
+//                                    epicID: nil,
+//                                    status: .open,
+//                                    timestamp: Timestamp(date: Date())),
+//                   isPresented: $isPresented)
+//    }
+//}

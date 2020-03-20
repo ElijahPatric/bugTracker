@@ -18,7 +18,6 @@ struct CreateTicket: View {
     @State var epic = ""
     @State var sprint = ""
     @State var isSelected = false
-    @State var selectedTitle = ""
     @State private var scale: CGFloat = 1.2
     
     @Binding var isPresented: Bool
@@ -51,14 +50,14 @@ struct CreateTicket: View {
                         ScrollView(.horizontal,showsIndicators: false) {
                             HStack {
                                 
+                                //list of possible issue types
                                 ForEach(0..<self.issueTypesArray.count) { counter in
                                     IssueTypeElement(titleText: self.issueTypesArray[counter]) { () -> ()? in
                                         self.isSelected = true
-                                        self.selectedTitle = self.issueTypesArray[counter]
                                         self.selectedTypeString = self.issueTypesArray[counter]
                                         
                                         return nil
-                                    }.scaleEffect(self.isSelected && self.selectedTitle == self.issueTypesArray[counter] ? self.scale : 1)
+                                    }.scaleEffect(self.isSelected && self.selectedTypeString == self.issueTypesArray[counter] ? self.scale : 1)
                                 }
                                 
                             }
