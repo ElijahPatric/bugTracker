@@ -12,7 +12,7 @@ import FirebaseFirestore
 struct EditTicket: View {
     
     @Binding var editIssue: issue?
-    //@Binding var isPresented: Bool
+    @Binding var isPresented: Bool
 
     @State var title = ""
     @State var description = ""
@@ -113,7 +113,7 @@ struct EditTicket: View {
             
             Button(action: {
                 self.saveTicket()
-             //   self.isPresented = false
+                self.isPresented = false
             }) {
                 Text("Save Edits")
             }

@@ -13,9 +13,10 @@ struct IssuesTab: View {
 @State var createTicket = false
 @State var selectedIssue: issue?
 @State var issueIsSelected: Bool = false
+var listIssueType: issueType = .none
 //uncomment when running
 @EnvironmentObject var issueObject: IssueHelper
-    
+@ObservedObject var helper = IssueHelper(withListner: true)
 //comment out when not needing preview. This is just for preview
 //@State var issueObject = IssueHelper(withListner: true)
   
@@ -32,7 +33,6 @@ struct IssuesTab: View {
                         .multilineTextAlignment(.center)
                         }.padding(.leading, CGFloat(8.0))
                         .sheet(isPresented: $createTicket) { CreateTicket(isPresented: self.$createTicket).environmentObject(self.issueObject)
-                    
                     }
 
                 }
@@ -41,13 +41,12 @@ struct IssuesTab: View {
             
             Spacer()
             
-            List(issueObject.tickets,selection: $selectedIssue) { listIssue in
+            List(helper.tickets,selection: $selectedIssue) { listIssue in
                 VStack {
                     HStack {
-                        IssueTypeIcon(type: listIssue.type)
-                        //Text("\(listIssue.type.rawValue)")
-                            //.foregroundColor(self.colorForType(type: listIssue.type))
-                            
+                        Text("\(String(listIssue.type.rawValue.first!))")
+                            .foregroundColor(self.colorForType(type: listIssue.type))
+                            .font(Font.system(.title, design: .rounded))
                         Text("\(listIssue.title ?? "Untitled")")
                         Spacer()
                     }
@@ -66,7 +65,7 @@ struct IssuesTab: View {
                     
                     }
                 }
-            }.sheet(isPresented: self.$issueIsSelected) { EditTicket(editIssue: self.$selectedIssue).environmentObject(self.issueObject)
+        }.sheet(isPresented: self.$issueIsSelected) { EditTicket(editIssue: self.$selectedIssue,isPresented: self.$issueIsSelected).environmentObject(self.issueObject)
             
             HStack {
                 Spacer()
@@ -78,6 +77,23 @@ struct IssuesTab: View {
         
     }
     
+    
+    func colorForType(type: issueType) -> Color {
+        
+        switch type {
+        case .bug:
+            return .red
+        case .none:
+            return .gray
+        case .feature:
+            return .orange
+        case .question:
+            return .green
+        case .support:
+            return .blue
+        
+        }
+    }
     
 
     

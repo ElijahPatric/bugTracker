@@ -10,7 +10,7 @@ import SwiftUI
 
 struct IssueTypeIcon: View {
     
-    @State var type: issueType
+    @Binding var type: issueType
     
     var body: some View {
         Text("\(self.firstLetter(type: self.type))")
@@ -28,8 +28,9 @@ struct IssueTypeIcon: View {
     
 }
 
-struct IssueTypeIcon_Previews: PreviewProvider {
-    static var previews: some View {
-        IssueTypeIcon(type: issueType.feature)
-    }
-}
+//struct IssueTypeIcon_Previews: PreviewProvider {
+//    static var previews: some View {
+//        @State var type = issueType.init(rawValue: "bug")
+//        IssueTypeIcon(type: $type)
+//    }
+//}

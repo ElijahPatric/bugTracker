@@ -16,13 +16,14 @@ class IssueHelper: ObservableObject {
     
     @Published var tickets: [issue] = []
 
-    var ticketArray: [issue] = []
+//    var ticketArray: [issue] = []
     
     init(withListner:Bool) {
         
         guard withListner == true else {return}
         let db = Firestore.firestore()
-        db.collection("Tickets").addSnapshotListener{ documentSnapshot, error in
+        
+        db.collection("Tickets").addSnapshotListener { documentSnapshot, error in
           guard let snapshot = documentSnapshot else {
             print("Error fetching document: \(error!)")
             return
@@ -32,7 +33,7 @@ class IssueHelper: ObservableObject {
                 //array is empty
                 return
             }
-            print("how many inits? 😎")
+ //           print("how many inits? 😎")
             self.tickets = []
             
             for document in documents {
@@ -53,7 +54,8 @@ class IssueHelper: ObservableObject {
                                      status: issueStatus.init(rawValue: statusString) ?? issueStatus.open,
                                      timestamp: Timestamp(date:Date()))
                 
-                
+//                print("title: \(newIssue.title) 😎")
+//                print("issue type: \(newIssue.type.rawValue) 😎")
                 self.tickets.append(newIssue)
                 
                 
@@ -92,7 +94,7 @@ class IssueHelper: ObservableObject {
                 status: .open,
                 timestamp: Timestamp(date:Date()))
                 
-                do {
+            do {
               try db.collection("Tickets").document("\(tempTicket.issueID)").setData(from: tempTicket)
               db.collection("AppData").document("HighestTicketNumber").setData(["TopNumber" : tempTicket.issueID + 1])
                 } catch {
@@ -106,6 +108,12 @@ class IssueHelper: ObservableObject {
         }
             
         }
+    }
+    
+    func listenForUpdates() {
+        
+        
+        
     }
     
     func handleNoDataDescription() {
