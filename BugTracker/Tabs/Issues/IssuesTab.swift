@@ -30,7 +30,7 @@ var listIssueType: issueType = .none
                         self.createTicket.toggle()
                     }) {
                         Text("Create Ticket")
-                        .multilineTextAlignment(.center)
+                         .multilineTextAlignment(.center)
                         }.padding(.leading, CGFloat(8.0))
                         .sheet(isPresented: $createTicket) { CreateTicket(isPresented: self.$createTicket).environmentObject(self.issueObject)
                     }
@@ -57,21 +57,28 @@ var listIssueType: issueType = .none
                         .padding(.trailing, CGFloat(6.0))
                         
                     }
+                    if self.selectedIssue?.title! == listIssue.title {
+                    
+                        IssueActionOptions(
+                            editClosure: {
+                                print("f")
+                                self.issueIsSelected.toggle()
+                            })
+                    }
                 }.onTapGesture {
-                    print("item tapped")
                     self.selectedIssue = listIssue
-                    self.issueIsSelected.toggle()
-                    print("issue is selected: \(self.issueIsSelected)")
+  //                  self.issueIsSelected.toggle()
                     
                     }
                 }
-        }.sheet(isPresented: self.$issueIsSelected) { EditTicket(editIssue: self.$selectedIssue,isPresented: self.$issueIsSelected).environmentObject(self.issueObject)
-            
             HStack {
                 Spacer()
                 Text("issues: \(self.issueObject.tickets.count)")
                     
             }
+        }.sheet(isPresented: self.$issueIsSelected) { EditTicket(editIssue: self.$selectedIssue,isPresented: self.$issueIsSelected).environmentObject(self.issueObject)
+            
+            
             
         }
         

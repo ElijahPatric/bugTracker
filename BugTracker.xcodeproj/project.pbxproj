@@ -12,7 +12,7 @@
 		CF126F6423F37C25008D5605 /* CreateTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF126F6323F37C25008D5605 /* CreateTicket.swift */; };
 		CF55D87C23F8D6D70068B877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */; };
 		CF6E82962419CAC000D2BD50 /* EditTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E82952419CAC000D2BD50 /* EditTicket.swift */; };
-		CF7232CD24147D7B002A83B0 /* IssueTypeIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7232CC24147D7B002A83B0 /* IssueTypeIcon.swift */; };
+		CF864FD2242D8CEC0077423C /* IssueActionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF864FD1242D8CEC0077423C /* IssueActionOptions.swift */; };
 		CFA5663523ED0E0A00800681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5663423ED0E0A00800681 /* AppDelegate.swift */; };
 		CFA5663723ED0E0A00800681 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5663623ED0E0A00800681 /* SceneDelegate.swift */; };
 		CFA5663A23ED0E0A00800681 /* BugTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CFA5663823ED0E0A00800681 /* BugTracker.xcdatamodeld */; };
@@ -63,7 +63,7 @@
 		CF126F6323F37C25008D5605 /* CreateTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTicket.swift; sourceTree = "<group>"; };
 		CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CF6E82952419CAC000D2BD50 /* EditTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTicket.swift; sourceTree = "<group>"; };
-		CF7232CC24147D7B002A83B0 /* IssueTypeIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTypeIcon.swift; sourceTree = "<group>"; };
+		CF864FD1242D8CEC0077423C /* IssueActionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueActionOptions.swift; sourceTree = "<group>"; };
 		CFA5663123ED0E0A00800681 /* BugTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFA5663423ED0E0A00800681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CFA5663623ED0E0A00800681 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				CFD9877223F62D1D007EDEA7 /* IssueTypeElement.swift */,
-				CF7232CC24147D7B002A83B0 /* IssueTypeIcon.swift */,
+				CF864FD1242D8CEC0077423C /* IssueActionOptions.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -519,7 +519,6 @@
 			files = (
 				CFD9877323F62D1D007EDEA7 /* IssueTypeElement.swift in Sources */,
 				CFA5663523ED0E0A00800681 /* AppDelegate.swift in Sources */,
-				CF7232CD24147D7B002A83B0 /* IssueTypeIcon.swift in Sources */,
 				CFBC586323F24ADD008AA923 /* EpicsTab.swift in Sources */,
 				CFBC585F23F24AA7008AA923 /* IssuesTab.swift in Sources */,
 				CF6E82962419CAC000D2BD50 /* EditTicket.swift in Sources */,
@@ -530,6 +529,7 @@
 				CFBC586623F24D57008AA923 /* IssueModel.swift in Sources */,
 				CFA5663A23ED0E0A00800681 /* BugTracker.xcdatamodeld in Sources */,
 				CFBC586C23F254A8008AA923 /* issueStatus.swift in Sources */,
+				CF864FD2242D8CEC0077423C /* IssueActionOptions.swift in Sources */,
 				CFBC586823F251D6008AA923 /* UserModel.swift in Sources */,
 				CFBC586123F24AC2008AA923 /* SprintTab.swift in Sources */,
 				CFBC586A23F252CA008AA923 /* IssueType.swift in Sources */,
