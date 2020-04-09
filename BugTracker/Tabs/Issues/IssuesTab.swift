@@ -52,7 +52,7 @@ var listIssueType: issueType = .none
                     }
                     HStack {
                        Spacer()
-                       Text("\(self.issueObject.stringForTimestamp(issue: listIssue))")
+                       Text("\(self.helper.stringForTimestamp(issue: listIssue))")
                         .font(Font(UIFont.monospacedSystemFont(ofSize: 12, weight: .light)))
                         .padding(.trailing, CGFloat(6.0))
                         
@@ -73,7 +73,7 @@ var listIssueType: issueType = .none
                 }
             HStack {
                 Spacer()
-                Text("issues: \(self.issueObject.tickets.count)")
+                Text("issues: \(self.helper.tickets.count)")
                     
             }
         }.sheet(isPresented: self.$issueIsSelected) { EditTicket(editIssue: self.$selectedIssue,isPresented: self.$issueIsSelected).environmentObject(self.issueObject)

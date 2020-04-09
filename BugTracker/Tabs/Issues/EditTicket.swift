@@ -34,8 +34,8 @@ struct EditTicket: View {
             }
         }
     }
-    
-    @EnvironmentObject var issueObject: IssueHelper
+    @ObservedObject var helper = IssueHelper(withListner: false)
+    //@EnvironmentObject var issueObject: IssueHelper
     
     let issueTypesArray: [String] = issueType.allValues
     
@@ -135,7 +135,7 @@ struct EditTicket: View {
                                     timestamp: self.editIssue!.timestamp)
             
     //          helper.saveIssue(ticket: newTicket)
-            issueObject.saveIssue(ticket: newTicket,existingIssue: true)
+            helper.saveIssue(ticket: newTicket,existingIssue: true)
         }
 
 }

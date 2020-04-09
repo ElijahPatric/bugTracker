@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		984FA9F7E1A2D4EE7C0BAA60 /* Pods_BugTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0036182144E5CE123A4836F6 /* Pods_BugTracker.framework */; };
 		9BF7E3E636F2DC87E5D4BAC7 /* Pods_BugTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0072604D52B3883E474E358F /* Pods_BugTrackerTests.framework */; };
+		CF003B0C2439559C0073E00E /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF003B0B2439559C0073E00E /* AuthHelper.swift */; };
 		CF126F6423F37C25008D5605 /* CreateTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF126F6323F37C25008D5605 /* CreateTicket.swift */; };
 		CF55D87C23F8D6D70068B877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */; };
 		CF6E82962419CAC000D2BD50 /* EditTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E82952419CAC000D2BD50 /* EditTicket.swift */; };
@@ -26,10 +27,11 @@
 		CFBC586123F24AC2008AA923 /* SprintTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC586023F24AC2008AA923 /* SprintTab.swift */; };
 		CFBC586323F24ADD008AA923 /* EpicsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC586223F24ADD008AA923 /* EpicsTab.swift */; };
 		CFBC586623F24D57008AA923 /* IssueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC586523F24D57008AA923 /* IssueModel.swift */; };
-		CFBC586823F251D6008AA923 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC586723F251D6008AA923 /* UserModel.swift */; };
+		CFBC586823F251D6008AA923 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC586723F251D6008AA923 /* User.swift */; };
 		CFBC586A23F252CA008AA923 /* IssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC586923F252CA008AA923 /* IssueType.swift */; };
 		CFBC586C23F254A8008AA923 /* issueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC586B23F254A8008AA923 /* issueStatus.swift */; };
 		CFBC586F23F25759008AA923 /* PermissionLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBC586E23F25759008AA923 /* PermissionLevels.swift */; };
+		CFBF430724380D8B00A75014 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBF430624380D8B00A75014 /* LoginView.swift */; };
 		CFD9877323F62D1D007EDEA7 /* IssueTypeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD9877223F62D1D007EDEA7 /* IssueTypeElement.swift */; };
 		CFE91CA523F8DF5B004D21DE /* IssueHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE91CA423F8DF5B004D21DE /* IssueHelper.swift */; };
 		FDCF6B216DB15E77380E45B8 /* Pods_BugTracker_BugTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EFEA7F4F932B8E94F3CC1B /* Pods_BugTracker_BugTrackerUITests.framework */; };
@@ -60,6 +62,7 @@
 		45EFEA7F4F932B8E94F3CC1B /* Pods_BugTracker_BugTrackerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BugTracker_BugTrackerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C3561440F67D47C55F50ED5 /* Pods-BugTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BugTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-BugTrackerTests/Pods-BugTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A14E31C25FB80550E0B1CA86 /* Pods-BugTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BugTrackerTests.release.xcconfig"; path = "Target Support Files/Pods-BugTrackerTests/Pods-BugTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
+		CF003B0B2439559C0073E00E /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		CF126F6323F37C25008D5605 /* CreateTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTicket.swift; sourceTree = "<group>"; };
 		CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CF6E82952419CAC000D2BD50 /* EditTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTicket.swift; sourceTree = "<group>"; };
@@ -83,10 +86,11 @@
 		CFBC586023F24AC2008AA923 /* SprintTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintTab.swift; sourceTree = "<group>"; };
 		CFBC586223F24ADD008AA923 /* EpicsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpicsTab.swift; sourceTree = "<group>"; };
 		CFBC586523F24D57008AA923 /* IssueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueModel.swift; sourceTree = "<group>"; };
-		CFBC586723F251D6008AA923 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		CFBC586723F251D6008AA923 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CFBC586923F252CA008AA923 /* IssueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueType.swift; sourceTree = "<group>"; };
 		CFBC586B23F254A8008AA923 /* issueStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = issueStatus.swift; sourceTree = "<group>"; };
 		CFBC586E23F25759008AA923 /* PermissionLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionLevels.swift; sourceTree = "<group>"; };
+		CFBF430624380D8B00A75014 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		CFD9877223F62D1D007EDEA7 /* IssueTypeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTypeElement.swift; sourceTree = "<group>"; };
 		CFE91CA423F8DF5B004D21DE /* IssueHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueHelper.swift; sourceTree = "<group>"; };
 		D9F4C5C49C3F7DD1F7EA1A70 /* Pods-BugTracker-BugTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BugTracker-BugTrackerUITests.release.xcconfig"; path = "Target Support Files/Pods-BugTracker-BugTrackerUITests/Pods-BugTracker-BugTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -193,6 +197,7 @@
 				CFBC586D23F2550E008AA923 /* Models */,
 				CFBC586423F24D00008AA923 /* Tabs */,
 				CFA5663B23ED0E0A00800681 /* ContentView.swift */,
+				CFBF430624380D8B00A75014 /* LoginView.swift */,
 				CFA5664223ED0E0C00800681 /* LaunchScreen.storyboard */,
 				CFA5663D23ED0E0C00800681 /* Assets.xcassets */,
 				CFA5664523ED0E0C00800681 /* Info.plist */,
@@ -242,7 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				CFBC586523F24D57008AA923 /* IssueModel.swift */,
-				CFBC586723F251D6008AA923 /* UserModel.swift */,
+				CFBC586723F251D6008AA923 /* User.swift */,
 				CFBC586923F252CA008AA923 /* IssueType.swift */,
 				CFBC586B23F254A8008AA923 /* issueStatus.swift */,
 				CFBC586E23F25759008AA923 /* PermissionLevels.swift */,
@@ -263,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				CFE91CA423F8DF5B004D21DE /* IssueHelper.swift */,
+				CF003B0B2439559C0073E00E /* AuthHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -526,11 +532,13 @@
 				CFA5663C23ED0E0A00800681 /* ContentView.swift in Sources */,
 				CFE91CA523F8DF5B004D21DE /* IssueHelper.swift in Sources */,
 				CFBC586F23F25759008AA923 /* PermissionLevels.swift in Sources */,
+				CF003B0C2439559C0073E00E /* AuthHelper.swift in Sources */,
 				CFBC586623F24D57008AA923 /* IssueModel.swift in Sources */,
 				CFA5663A23ED0E0A00800681 /* BugTracker.xcdatamodeld in Sources */,
 				CFBC586C23F254A8008AA923 /* issueStatus.swift in Sources */,
+				CFBF430724380D8B00A75014 /* LoginView.swift in Sources */,
 				CF864FD2242D8CEC0077423C /* IssueActionOptions.swift in Sources */,
-				CFBC586823F251D6008AA923 /* UserModel.swift in Sources */,
+				CFBC586823F251D6008AA923 /* User.swift in Sources */,
 				CFBC586123F24AC2008AA923 /* SprintTab.swift in Sources */,
 				CFBC586A23F252CA008AA923 /* IssueType.swift in Sources */,
 				CF126F6423F37C25008D5605 /* CreateTicket.swift in Sources */,

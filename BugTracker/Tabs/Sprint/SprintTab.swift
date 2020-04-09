@@ -10,7 +10,17 @@ import SwiftUI
 
 struct SprintTab: View {
     var body: some View {
-        Text("Hello, Sprints!")
+        VStack {
+            ScrollView(.horizontal) {
+                Button(action: {
+                    
+                }) {
+                    Text("Create New Sprint")
+                      .multilineTextAlignment(.center)
+                }.padding(.leading, CGFloat(8.0))
+            }
+            Spacer()
+        }
     }
 }
 

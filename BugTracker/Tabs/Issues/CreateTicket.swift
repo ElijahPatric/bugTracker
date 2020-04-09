@@ -33,7 +33,7 @@ struct CreateTicket: View {
         }
     }
     let issueTypesArray: [String] = issueType.allValues
-//    let helper = IssueHelper(withListner:false)
+    let helper = IssueHelper(withListner:false)
     
     var body: some View {
         VStack {
@@ -114,7 +114,7 @@ struct CreateTicket: View {
                                 timestamp: Timestamp(date: Date()))
         
 //          helper.saveIssue(ticket: newTicket)
-        issueObject.saveIssue(ticket: newTicket)
+        helper.saveIssue(ticket: newTicket)
     }
     
 }

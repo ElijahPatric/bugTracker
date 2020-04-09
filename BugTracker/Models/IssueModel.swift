@@ -29,7 +29,7 @@ struct issue: Codable, Identifiable, Hashable {
     var description: String?
     var issueID: Int
     var points: Int?
-    var assignee: user?
+    var assignee: User?
     var type: issueType
     var sprintID: Int?
     var epicID: Int?
