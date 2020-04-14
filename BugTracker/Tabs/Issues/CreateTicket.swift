@@ -21,7 +21,6 @@ struct CreateTicket: View {
     @State private var scale: CGFloat = 1.2
     
     @Binding var isPresented: Bool
-    @EnvironmentObject var issueObject: IssueHelper
 
     var storyPoints: Int {
         get {
@@ -113,7 +112,6 @@ struct CreateTicket: View {
                                 status: .open,
                                 timestamp: Timestamp(date: Date()))
         
-//          helper.saveIssue(ticket: newTicket)
         helper.saveIssue(ticket: newTicket)
     }
     

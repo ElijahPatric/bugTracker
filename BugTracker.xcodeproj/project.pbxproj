@@ -14,6 +14,7 @@
 		CF55D87C23F8D6D70068B877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */; };
 		CF6E82962419CAC000D2BD50 /* EditTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E82952419CAC000D2BD50 /* EditTicket.swift */; };
 		CF864FD2242D8CEC0077423C /* IssueActionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF864FD1242D8CEC0077423C /* IssueActionOptions.swift */; };
+		CF9878BB2440104000A41C76 /* CreateSprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9878BA2440104000A41C76 /* CreateSprint.swift */; };
 		CFA5663523ED0E0A00800681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5663423ED0E0A00800681 /* AppDelegate.swift */; };
 		CFA5663723ED0E0A00800681 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA5663623ED0E0A00800681 /* SceneDelegate.swift */; };
 		CFA5663A23ED0E0A00800681 /* BugTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CFA5663823ED0E0A00800681 /* BugTracker.xcdatamodeld */; };
@@ -67,6 +68,7 @@
 		CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CF6E82952419CAC000D2BD50 /* EditTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTicket.swift; sourceTree = "<group>"; };
 		CF864FD1242D8CEC0077423C /* IssueActionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueActionOptions.swift; sourceTree = "<group>"; };
+		CF9878BA2440104000A41C76 /* CreateSprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSprint.swift; sourceTree = "<group>"; };
 		CFA5663123ED0E0A00800681 /* BugTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFA5663423ED0E0A00800681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CFA5663623ED0E0A00800681 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				CFBC586023F24AC2008AA923 /* SprintTab.swift */,
+				CF9878BA2440104000A41C76 /* CreateSprint.swift */,
 			);
 			path = Sprint;
 			sourceTree = "<group>";
@@ -189,19 +192,16 @@
 		CFA5663323ED0E0A00800681 /* BugTracker */ = {
 			isa = PBXGroup;
 			children = (
+				CFA5664523ED0E0C00800681 /* Info.plist */,
+				CFC593A124453EA200789F76 /* Delegates */,
+				CFC593A024453E6B00789F76 /* Utilities */,
 				CFE91CA323F8DF12004D21DE /* Helpers */,
-				CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */,
-				CFA5663423ED0E0A00800681 /* AppDelegate.swift */,
-				CFA5663623ED0E0A00800681 /* SceneDelegate.swift */,
 				CFD9877423F62E3C007EDEA7 /* Elements */,
 				CFBC586D23F2550E008AA923 /* Models */,
 				CFBC586423F24D00008AA923 /* Tabs */,
 				CFA5663B23ED0E0A00800681 /* ContentView.swift */,
 				CFBF430624380D8B00A75014 /* LoginView.swift */,
-				CFA5664223ED0E0C00800681 /* LaunchScreen.storyboard */,
 				CFA5663D23ED0E0C00800681 /* Assets.xcassets */,
-				CFA5664523ED0E0C00800681 /* Info.plist */,
-				CFA5663823ED0E0A00800681 /* BugTracker.xcdatamodeld */,
 				CFA5663F23ED0E0C00800681 /* Preview Content */,
 			);
 			path = BugTracker;
@@ -253,6 +253,25 @@
 				CFBC586E23F25759008AA923 /* PermissionLevels.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CFC593A024453E6B00789F76 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */,
+				CFA5664223ED0E0C00800681 /* LaunchScreen.storyboard */,
+				CFA5663823ED0E0A00800681 /* BugTracker.xcdatamodeld */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		CFC593A124453EA200789F76 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				CFA5663423ED0E0A00800681 /* AppDelegate.swift */,
+				CFA5663623ED0E0A00800681 /* SceneDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		CFD9877423F62E3C007EDEA7 /* Elements */ = {
@@ -536,6 +555,7 @@
 				CFBC586623F24D57008AA923 /* IssueModel.swift in Sources */,
 				CFA5663A23ED0E0A00800681 /* BugTracker.xcdatamodeld in Sources */,
 				CFBC586C23F254A8008AA923 /* issueStatus.swift in Sources */,
+				CF9878BB2440104000A41C76 /* CreateSprint.swift in Sources */,
 				CFBF430724380D8B00A75014 /* LoginView.swift in Sources */,
 				CF864FD2242D8CEC0077423C /* IssueActionOptions.swift in Sources */,
 				CFBC586823F251D6008AA923 /* User.swift in Sources */,

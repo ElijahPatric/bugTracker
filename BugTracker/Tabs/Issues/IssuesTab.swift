@@ -14,11 +14,9 @@ struct IssuesTab: View {
 @State var selectedIssue: issue?
 @State var issueIsSelected: Bool = false
 var listIssueType: issueType = .none
-//uncomment when running
-@EnvironmentObject var issueObject: IssueHelper
+
 @ObservedObject var helper = IssueHelper(withListner: true)
-//comment out when not needing preview. This is just for preview
-//@State var issueObject = IssueHelper(withListner: true)
+
   
     var body: some View {
 
@@ -32,7 +30,7 @@ var listIssueType: issueType = .none
                         Text("Create Ticket")
                          .multilineTextAlignment(.center)
                         }.padding(.leading, CGFloat(8.0))
-                        .sheet(isPresented: $createTicket) { CreateTicket(isPresented: self.$createTicket).environmentObject(self.issueObject)
+                        .sheet(isPresented: $createTicket) { CreateTicket(isPresented: self.$createTicket)
                     }
 
                 }
@@ -76,7 +74,7 @@ var listIssueType: issueType = .none
                 Text("issues: \(self.helper.tickets.count)")
                     
             }
-        }.sheet(isPresented: self.$issueIsSelected) { EditTicket(editIssue: self.$selectedIssue,isPresented: self.$issueIsSelected).environmentObject(self.issueObject)
+        }.sheet(isPresented: self.$issueIsSelected) { EditTicket(editIssue: self.$selectedIssue,isPresented: self.$issueIsSelected)
             
             
             
@@ -108,7 +106,7 @@ var listIssueType: issueType = .none
 
 struct IssuesTab_Previews: PreviewProvider {
     
-    var issueObject: [String] = ["1","2","3"]
+    var helper: [String] = ["1","2","3"]
     @State var createTicket = false
     
     static var previews: some View {

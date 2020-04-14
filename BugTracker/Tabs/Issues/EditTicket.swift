@@ -35,7 +35,6 @@ struct EditTicket: View {
         }
     }
     @ObservedObject var helper = IssueHelper(withListner: false)
-    //@EnvironmentObject var issueObject: IssueHelper
     
     let issueTypesArray: [String] = issueType.allValues
     

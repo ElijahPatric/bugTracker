@@ -9,15 +9,21 @@
 import SwiftUI
 
 struct SprintTab: View {
+    @State var presentSprint = false
+    
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
                 Button(action: {
-                    
+                    self.presentSprint.toggle()
                 }) {
                     Text("Create New Sprint")
                       .multilineTextAlignment(.center)
                 }.padding(.leading, CGFloat(8.0))
+                 .sheet(isPresented: $presentSprint) {
+                    CreateSprint(isPresented: self.$presentSprint)
+                }
+                    
             }
             Spacer()
         }

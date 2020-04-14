@@ -11,12 +11,8 @@ import Firebase
 import FirebaseFirestoreSwift
 import SwiftUI 
 class IssueHelper: ObservableObject {
-    
-//    static let db = Firestore.firestore()
-    
+        
     @Published var tickets: [issue] = []
-
-//    var ticketArray: [issue] = []
     
     init(withListner:Bool) {
         
