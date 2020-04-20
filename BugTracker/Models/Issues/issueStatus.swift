@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 enum issueStatus: String, Codable {
     case open = "open"
     case complete = "complete"

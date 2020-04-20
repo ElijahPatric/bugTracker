@@ -12,6 +12,10 @@
 		CF003B0C2439559C0073E00E /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF003B0B2439559C0073E00E /* AuthHelper.swift */; };
 		CF126F6423F37C25008D5605 /* CreateTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF126F6323F37C25008D5605 /* CreateTicket.swift */; };
 		CF55D87C23F8D6D70068B877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */; };
+		CF6E0655244E3B0500979823 /* ProtocolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E0654244E3B0500979823 /* ProtocolsList.swift */; };
+		CF6E0657244E41FA00979823 /* Sprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E0656244E41FA00979823 /* Sprint.swift */; };
+		CF6E065B244E449C00979823 /* SprintStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E065A244E449C00979823 /* SprintStatus.swift */; };
+		CF6E065D244E455600979823 /* SprintDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E065C244E455600979823 /* SprintDuration.swift */; };
 		CF6E82962419CAC000D2BD50 /* EditTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E82952419CAC000D2BD50 /* EditTicket.swift */; };
 		CF864FD2242D8CEC0077423C /* IssueActionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF864FD1242D8CEC0077423C /* IssueActionOptions.swift */; };
 		CF9878BB2440104000A41C76 /* CreateSprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9878BA2440104000A41C76 /* CreateSprint.swift */; };
@@ -66,6 +70,10 @@
 		CF003B0B2439559C0073E00E /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		CF126F6323F37C25008D5605 /* CreateTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTicket.swift; sourceTree = "<group>"; };
 		CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CF6E0654244E3B0500979823 /* ProtocolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolsList.swift; sourceTree = "<group>"; };
+		CF6E0656244E41FA00979823 /* Sprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprint.swift; sourceTree = "<group>"; };
+		CF6E065A244E449C00979823 /* SprintStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintStatus.swift; sourceTree = "<group>"; };
+		CF6E065C244E455600979823 /* SprintDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintDuration.swift; sourceTree = "<group>"; };
 		CF6E82952419CAC000D2BD50 /* EditTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTicket.swift; sourceTree = "<group>"; };
 		CF864FD1242D8CEC0077423C /* IssueActionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueActionOptions.swift; sourceTree = "<group>"; };
 		CF9878BA2440104000A41C76 /* CreateSprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSprint.swift; sourceTree = "<group>"; };
@@ -138,6 +146,26 @@
 				A14E31C25FB80550E0B1CA86 /* Pods-BugTrackerTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		CF6E0658244E43F600979823 /* Issues */ = {
+			isa = PBXGroup;
+			children = (
+				CFBC586523F24D57008AA923 /* IssueModel.swift */,
+				CFBC586923F252CA008AA923 /* IssueType.swift */,
+				CFBC586B23F254A8008AA923 /* issueStatus.swift */,
+			);
+			path = Issues;
+			sourceTree = "<group>";
+		};
+		CF6E0659244E441400979823 /* Sprint */ = {
+			isa = PBXGroup;
+			children = (
+				CF6E065A244E449C00979823 /* SprintStatus.swift */,
+				CF6E065C244E455600979823 /* SprintDuration.swift */,
+				CF6E0656244E41FA00979823 /* Sprint.swift */,
+			);
+			path = Sprint;
 			sourceTree = "<group>";
 		};
 		CF6E82932419C87C00D2BD50 /* Sprint */ = {
@@ -246,10 +274,9 @@
 		CFBC586D23F2550E008AA923 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				CFBC586523F24D57008AA923 /* IssueModel.swift */,
+				CF6E0659244E441400979823 /* Sprint */,
+				CF6E0658244E43F600979823 /* Issues */,
 				CFBC586723F251D6008AA923 /* User.swift */,
-				CFBC586923F252CA008AA923 /* IssueType.swift */,
-				CFBC586B23F254A8008AA923 /* issueStatus.swift */,
 				CFBC586E23F25759008AA923 /* PermissionLevels.swift */,
 			);
 			path = Models;
@@ -261,6 +288,7 @@
 				CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */,
 				CFA5664223ED0E0C00800681 /* LaunchScreen.storyboard */,
 				CFA5663823ED0E0A00800681 /* BugTracker.xcdatamodeld */,
+				CF6E0654244E3B0500979823 /* ProtocolsList.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -543,13 +571,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFD9877323F62D1D007EDEA7 /* IssueTypeElement.swift in Sources */,
+				CF6E0657244E41FA00979823 /* Sprint.swift in Sources */,
 				CFA5663523ED0E0A00800681 /* AppDelegate.swift in Sources */,
 				CFBC586323F24ADD008AA923 /* EpicsTab.swift in Sources */,
 				CFBC585F23F24AA7008AA923 /* IssuesTab.swift in Sources */,
 				CF6E82962419CAC000D2BD50 /* EditTicket.swift in Sources */,
 				CFA5663723ED0E0A00800681 /* SceneDelegate.swift in Sources */,
+				CF6E0655244E3B0500979823 /* ProtocolsList.swift in Sources */,
 				CFA5663C23ED0E0A00800681 /* ContentView.swift in Sources */,
 				CFE91CA523F8DF5B004D21DE /* IssueHelper.swift in Sources */,
+				CF6E065B244E449C00979823 /* SprintStatus.swift in Sources */,
 				CFBC586F23F25759008AA923 /* PermissionLevels.swift in Sources */,
 				CF003B0C2439559C0073E00E /* AuthHelper.swift in Sources */,
 				CFBC586623F24D57008AA923 /* IssueModel.swift in Sources */,
@@ -557,6 +588,7 @@
 				CFBC586C23F254A8008AA923 /* issueStatus.swift in Sources */,
 				CF9878BB2440104000A41C76 /* CreateSprint.swift in Sources */,
 				CFBF430724380D8B00A75014 /* LoginView.swift in Sources */,
+				CF6E065D244E455600979823 /* SprintDuration.swift in Sources */,
 				CF864FD2242D8CEC0077423C /* IssueActionOptions.swift in Sources */,
 				CFBC586823F251D6008AA923 /* User.swift in Sources */,
 				CFBC586123F24AC2008AA923 /* SprintTab.swift in Sources */,

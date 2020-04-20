@@ -50,8 +50,7 @@ class IssueHelper: ObservableObject {
                                      status: issueStatus.init(rawValue: statusString) ?? issueStatus.open,
                                      timestamp: Timestamp(date:Date()))
                 
-//                print("title: \(newIssue.title) 😎")
-//                print("issue type: \(newIssue.type.rawValue) 😎")
+
                 self.tickets.append(newIssue)
                 
                 
@@ -130,9 +129,57 @@ class IssueHelper: ObservableObject {
         
         return dateString
         
+    }
+    
+}
+extension IssueHelper: SprintHelper {
+    
+    func handleCreateSprintError() {
         
     }
     
-    
+    func saveSprint(sprint: sprint, existingSprint: Bool = false) {
+        let db = Firestore.firestore()
+        let docRef = db.collection("AppData").document("HighestSprintNumber")
+        
+        docRef.getDocument { (document, error) in
+            
+            if let document = document, document.exists {
+                
+                //get a new id number for this new sprint
+                let dataDescription = document.data() as? [String:Int]
+                guard dataDescription != nil else {self.handleNoDataDescription();return}
+                var topNumber = dataDescription!["TopNumber"]!
+                
+                //if existing sprint, use same id, otherwise it would make a new sprint
+                if existingSprint == true {
+                    topNumber = sprint.sprintID
+                }
+                
+                let tempSprint: sprint = type(of: sprint).init(
+                sprintID: topNumber,
+                duration: 14,
+                startTimestamp: Timestamp(date: Date()),
+                endTimestamp: Timestamp(date: Date()),
+                title: sprint.title,
+                description: sprint.description,
+                points: sprint.points)
+                
+                do {
+                    
+                  try db.collection("Sprints").document("\(tempSprint.sprintID)").setData(from: tempSprint)
+                    db.collection("AppData").document("HighestSprintNumber").setData(["TopNumber" : tempSprint.sprintID + 1])
+                    
+                } catch {
+                    self.handleCreateSprintError()
+                }
+               
+                
+            } else {
+                print("Document does not exist")
+            }
+            
+        }
+    }
 }
 
