@@ -11,6 +11,11 @@
 		9BF7E3E636F2DC87E5D4BAC7 /* Pods_BugTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0072604D52B3883E474E358F /* Pods_BugTrackerTests.framework */; };
 		CF003B0C2439559C0073E00E /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF003B0B2439559C0073E00E /* AuthHelper.swift */; };
 		CF126F6423F37C25008D5605 /* CreateTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF126F6323F37C25008D5605 /* CreateTicket.swift */; };
+		CF4D7478246092E4003E25E8 /* SignInWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4D7477246092E4003E25E8 /* SignInWithApple.swift */; };
+		CF4D747A24609B08003E25E8 /* SignInWithAppleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4D747924609B08003E25E8 /* SignInWithAppleDelegate.swift */; };
+		CF4D747C2461E3EC003E25E8 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4D747B2461E3EC003E25E8 /* UserData.swift */; };
+		CF4D747F2461E6DD003E25E8 /* UserDataKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4D747E2461E6DD003E25E8 /* UserDataKeychain.swift */; };
+		CF4D74812461E760003E25E8 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4D74802461E760003E25E8 /* Keychain.swift */; };
 		CF55D87C23F8D6D70068B877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */; };
 		CF6E0655244E3B0500979823 /* ProtocolsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E0654244E3B0500979823 /* ProtocolsList.swift */; };
 		CF6E0657244E41FA00979823 /* Sprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6E0656244E41FA00979823 /* Sprint.swift */; };
@@ -69,6 +74,12 @@
 		A14E31C25FB80550E0B1CA86 /* Pods-BugTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BugTrackerTests.release.xcconfig"; path = "Target Support Files/Pods-BugTrackerTests/Pods-BugTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
 		CF003B0B2439559C0073E00E /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		CF126F6323F37C25008D5605 /* CreateTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTicket.swift; sourceTree = "<group>"; };
+		CF4D747624609173003E25E8 /* BugTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BugTracker.entitlements; sourceTree = "<group>"; };
+		CF4D7477246092E4003E25E8 /* SignInWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithApple.swift; sourceTree = "<group>"; };
+		CF4D747924609B08003E25E8 /* SignInWithAppleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegate.swift; sourceTree = "<group>"; };
+		CF4D747B2461E3EC003E25E8 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		CF4D747E2461E6DD003E25E8 /* UserDataKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataKeychain.swift; sourceTree = "<group>"; };
+		CF4D74802461E760003E25E8 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		CF55D87B23F8D6D70068B877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CF6E0654244E3B0500979823 /* ProtocolsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolsList.swift; sourceTree = "<group>"; };
 		CF6E0656244E41FA00979823 /* Sprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprint.swift; sourceTree = "<group>"; };
@@ -148,6 +159,36 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CF057EFF2450ED6E0043A6FE /* User */ = {
+			isa = PBXGroup;
+			children = (
+				CFBC586723F251D6008AA923 /* User.swift */,
+				CFBC586E23F25759008AA923 /* PermissionLevels.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		CF4D747D2461E4AA003E25E8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CF4D747924609B08003E25E8 /* SignInWithAppleDelegate.swift */,
+				CFBF430624380D8B00A75014 /* LoginView.swift */,
+				CFA5663B23ED0E0A00800681 /* ContentView.swift */,
+				CF4D7477246092E4003E25E8 /* SignInWithApple.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CF4D74822461E774003E25E8 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				CF4D74802461E760003E25E8 /* Keychain.swift */,
+				CF4D747E2461E6DD003E25E8 /* UserDataKeychain.swift */,
+				CF4D747B2461E3EC003E25E8 /* UserData.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
 		CF6E0658244E43F600979823 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,15 +261,16 @@
 		CFA5663323ED0E0A00800681 /* BugTracker */ = {
 			isa = PBXGroup;
 			children = (
+				CF4D74822461E774003E25E8 /* SignIn */,
+				CF4D747624609173003E25E8 /* BugTracker.entitlements */,
 				CFA5664523ED0E0C00800681 /* Info.plist */,
 				CFC593A124453EA200789F76 /* Delegates */,
+				CF4D747D2461E4AA003E25E8 /* Views */,
 				CFC593A024453E6B00789F76 /* Utilities */,
 				CFE91CA323F8DF12004D21DE /* Helpers */,
 				CFD9877423F62E3C007EDEA7 /* Elements */,
 				CFBC586D23F2550E008AA923 /* Models */,
 				CFBC586423F24D00008AA923 /* Tabs */,
-				CFA5663B23ED0E0A00800681 /* ContentView.swift */,
-				CFBF430624380D8B00A75014 /* LoginView.swift */,
 				CFA5663D23ED0E0C00800681 /* Assets.xcassets */,
 				CFA5663F23ED0E0C00800681 /* Preview Content */,
 			);
@@ -274,10 +316,9 @@
 		CFBC586D23F2550E008AA923 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CF057EFF2450ED6E0043A6FE /* User */,
 				CF6E0659244E441400979823 /* Sprint */,
 				CF6E0658244E43F600979823 /* Issues */,
-				CFBC586723F251D6008AA923 /* User.swift */,
-				CFBC586E23F25759008AA923 /* PermissionLevels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -577,18 +618,23 @@
 				CFBC585F23F24AA7008AA923 /* IssuesTab.swift in Sources */,
 				CF6E82962419CAC000D2BD50 /* EditTicket.swift in Sources */,
 				CFA5663723ED0E0A00800681 /* SceneDelegate.swift in Sources */,
+				CF4D74812461E760003E25E8 /* Keychain.swift in Sources */,
+				CF4D747A24609B08003E25E8 /* SignInWithAppleDelegate.swift in Sources */,
 				CF6E0655244E3B0500979823 /* ProtocolsList.swift in Sources */,
 				CFA5663C23ED0E0A00800681 /* ContentView.swift in Sources */,
+				CF4D747F2461E6DD003E25E8 /* UserDataKeychain.swift in Sources */,
 				CFE91CA523F8DF5B004D21DE /* IssueHelper.swift in Sources */,
 				CF6E065B244E449C00979823 /* SprintStatus.swift in Sources */,
 				CFBC586F23F25759008AA923 /* PermissionLevels.swift in Sources */,
 				CF003B0C2439559C0073E00E /* AuthHelper.swift in Sources */,
 				CFBC586623F24D57008AA923 /* IssueModel.swift in Sources */,
 				CFA5663A23ED0E0A00800681 /* BugTracker.xcdatamodeld in Sources */,
+				CF4D7478246092E4003E25E8 /* SignInWithApple.swift in Sources */,
 				CFBC586C23F254A8008AA923 /* issueStatus.swift in Sources */,
 				CF9878BB2440104000A41C76 /* CreateSprint.swift in Sources */,
 				CFBF430724380D8B00A75014 /* LoginView.swift in Sources */,
 				CF6E065D244E455600979823 /* SprintDuration.swift in Sources */,
+				CF4D747C2461E3EC003E25E8 /* UserData.swift in Sources */,
 				CF864FD2242D8CEC0077423C /* IssueActionOptions.swift in Sources */,
 				CFBC586823F251D6008AA923 /* User.swift in Sources */,
 				CFBC586123F24AC2008AA923 /* SprintTab.swift in Sources */,
@@ -759,6 +805,7 @@
 			baseConfigurationReference = 3C32CE5737AA0A790C1CC35C /* Pods-BugTracker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BugTracker/BugTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"BugTracker/Preview Content\"";
 				DEVELOPMENT_TEAM = X6MTUDYME2;
@@ -780,6 +827,7 @@
 			baseConfigurationReference = EB3AD34E754E5EC9D11F8A49 /* Pods-BugTracker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BugTracker/BugTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"BugTracker/Preview Content\"";
 				DEVELOPMENT_TEAM = X6MTUDYME2;

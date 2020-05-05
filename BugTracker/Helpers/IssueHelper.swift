@@ -138,6 +138,16 @@ extension IssueHelper: SprintHelper {
         
     }
     
+    func sprintDurationByDates(start:Date,end:Date) -> Int {
+        
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: start, to: end)
+        
+        let days = components.day
+        
+        return days!
+    }
+    
     func saveSprint(sprint: sprint, existingSprint: Bool = false) {
         let db = Firestore.firestore()
         let docRef = db.collection("AppData").document("HighestSprintNumber")
