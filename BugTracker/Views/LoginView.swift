@@ -66,18 +66,6 @@ struct LoginView: View {
     }
     
     private func showAppleLogin() {
-        //let request = ASAuthorizationAppleIDProvider().createRequest()
-        //request.requestedScopes = [.fullName, .email]
-        //request.nonce = sha256(nonce)
-        
-        let nonce = self.appleSignInDelegates.randomNonceString()
-        self.appleSignInDelegates.currentNonce = nonce
-        
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        request.nonce = self.appleSignInDelegates.sha256(nonce)
         
         appleSignInDelegates = SignInWithAppleDelegate() { success in
             if success {
@@ -88,6 +76,17 @@ struct LoginView: View {
                 print("did not get success on loginView 🤓")
             }
         }
+        
+        let nonce = self.appleSignInDelegates.randomNonceString()
+        self.appleSignInDelegates.currentNonce = nonce
+        
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = self.appleSignInDelegates.sha256(nonce)
+        
+        
         
         let controller = ASAuthorizationController(authorizationRequests: [request])
         controller.delegate = appleSignInDelegates

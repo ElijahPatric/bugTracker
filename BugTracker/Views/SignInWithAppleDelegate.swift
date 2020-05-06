@@ -25,7 +25,9 @@ class SignInWithAppleDelegate: NSObject {
 extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+       
         /// ////////////// initial checks
+        print("got to did complete auth 🤓")
         var fireCredential: OAuthCredential?
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             
@@ -96,8 +98,6 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
             self.signInSucceeded(true)
         }
         
-        //self.signInSucceeded(true)
-        
     }
     
     func registerNewAccount(credential: ASAuthorizationAppleIDCredential, fireCredential: OAuthCredential? = nil) {
@@ -111,9 +111,10 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
         do {
             try keychain.store(userData)
         }catch {
+            print("error saving to keychain 🤓")
             self.signInSucceeded(false)
         }
-        
+        print("got past keychain code 🤓")
         //reach out to your web api and store credentials
         // Sign in with Firebase.
         Auth.auth().signIn(with: fireCredential!) { (authResult, error) in
@@ -167,7 +168,7 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
           }
         }
       }
-
+      print("this is what result is: \(result)")
       return result
     }
     

@@ -14,7 +14,7 @@ struct IssuesTab: View {
 @State var selectedIssue: issue?
 @State var issueIsSelected: Bool = false
 var listIssueType: issueType = .none
-
+@State var loginPresented: Bool = false
 @ObservedObject var helper = IssueHelper(withListner: true)
 
   
@@ -32,7 +32,13 @@ var listIssueType: issueType = .none
                         }.padding(.leading, CGFloat(8.0))
                         .sheet(isPresented: $createTicket) { CreateTicket(isPresented: self.$createTicket)
                     }
-
+                    Button(action: {
+                        self.loginPresented.toggle()
+                    }) {
+                        Text("Log In")
+                    }.sheet(isPresented: $loginPresented) {
+                        LoginView()
+                    }
                 }
             }
             
