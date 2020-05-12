@@ -9,12 +9,33 @@
 import SwiftUI
 import AuthenticationServices
 import CryptoKit
+import Firebase
 struct LoginView: View {
     @State private var username: String = ""
     @State private var password: String = ""
-    @State var appleSignInDelegates: SignInWithAppleDelegate! = nil
-
+    @State private var authSuccess = false
+    @ObservedObject var appleSignInDelegates: SignInWithAppleDelegate = SignInWithAppleDelegate()
+//        { success in
+//        if success {
+//
+//            print("got success on content view 🤓")
+//            //self.needsToSignIn = false
+//        }else {
+//            print("did not get success on content view 🤓")
+//            //self.needsToSignIn = true
+//        }
+//    }
+    
+    var isLoggedIn: Bool {
+        get {
+            return Auth.auth().currentUser != nil
+        }
+    }
+    
     var body: some View {
+        
+        Group { if self.appleSignInDelegates.isLoggedIn == false  {
+        
         VStack {
             Text("Basic Bug Tracker")
                 .font(.largeTitle)
@@ -63,19 +84,29 @@ struct LoginView: View {
             }
             
         }
+    }else {
+          ContentView()
+        }
+        }
     }
     
-    private func showAppleLogin() {
+    func showAppleLogin() {
         
-        appleSignInDelegates = SignInWithAppleDelegate() { success in
-            if success {
-              
-                print("got success on loginView 🤓")
-                
-            }else {
-                print("did not get success on loginView 🤓")
-            }
-        }
+//        appleSignInDelegates = SignInWithAppleDelegate() { success in
+//            if success {
+//
+//                print("got success on loginView 🤓")
+//                self.appleSignInDelegates.loginErrorOccurred = false
+//                self.appleSignInDelegates.isLoggedIn = true
+//                self.authSuccess = true
+//
+//            }else {
+//                print("did not get success on loginView 🤓")
+//                self.appleSignInDelegates.loginErrorOccurred = true
+//                self.appleSignInDelegates.isLoggedIn = false
+//                self.authSuccess = false
+//            }
+//        }
         
         let nonce = self.appleSignInDelegates.randomNonceString()
         self.appleSignInDelegates.currentNonce = nonce
@@ -91,7 +122,51 @@ struct LoginView: View {
         let controller = ASAuthorizationController(authorizationRequests: [request])
         controller.delegate = appleSignInDelegates
         controller.performRequests()
+        
     }
+    
+//    private func performAuthCheck() {
+//
+//
+//        let provider = ASAuthorizationAppleIDProvider()
+//
+//        provider.getCredentialState(forUserID: "currentUserIdentifier") { (state, error) in
+//
+//
+//            switch state {
+//            case .authorized :
+//                    //credentials are valid, no action needed
+//                    self.appleSignInDelegates.loginErrorOccurred = false
+//                    print("credentials are valid (login view)🤓")
+//
+//                break
+//
+//            case .notFound :
+//                    // credentials not found. Ask to Log In
+//                    print("credentials not found (login view)🤓")
+//
+//                break
+//
+//            case .revoked :
+//                    //credentials revoked. Log them out
+//
+//                break
+//
+//            case .transferred :
+//                    // not sure what this is. Ask them to log in
+//
+//                print("credentials transferred (login view)🤓")
+//                break
+//
+//            default :
+//                    // all other cases, ask them to log in
+//                break
+//
+//            }
+//
+//        }
+//
+//    }
 }
 
 struct LoginView_Previews: PreviewProvider {

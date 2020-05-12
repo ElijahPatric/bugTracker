@@ -7,7 +7,8 @@
 //
 
 import SwiftUI
-
+import Firebase
+import AuthenticationServices
 struct IssuesTab: View {
 
 @State var createTicket = false
@@ -17,6 +18,19 @@ var listIssueType: issueType = .none
 @State var loginPresented: Bool = false
 @ObservedObject var helper = IssueHelper(withListner: true)
 
+@ObservedObject var appleSignInDelegates: SignInWithAppleDelegate = SignInWithAppleDelegate()
+//    { success in
+//              if success {
+//                   
+//                  print("got success on issues tab 🤓")
+//                  //self.needsToSignIn = false
+//              }else {
+//                  print("did not get success on issues tab 🤓")
+//                   
+//                  //self.needsToSignIn = true
+//              }
+//          }
+    
   
     var body: some View {
 
@@ -33,12 +47,20 @@ var listIssueType: issueType = .none
                         .sheet(isPresented: $createTicket) { CreateTicket(isPresented: self.$createTicket)
                     }
                     Button(action: {
-                        self.loginPresented.toggle()
+                        
+                        let firebaseAuth = Auth.auth()
+                        do {
+                            self.appleSignInDelegates.isLoggedIn = false
+                          try firebaseAuth.signOut()
+                          
+                        } catch let signOutError as NSError {
+                          print ("Error signing out")
+                        }
+                        
                     }) {
-                        Text("Log In")
-                    }.sheet(isPresented: $loginPresented) {
-                        LoginView()
+                        Text("Log Out")
                     }
+                   
                 }
             }
             

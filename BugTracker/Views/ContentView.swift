@@ -8,9 +8,33 @@
 
 import SwiftUI
 import AuthenticationServices
+import Firebase
 struct ContentView: View {
-    @State var appleSignInDelegates: SignInWithAppleDelegate! = nil
+   
+    @State var needsToSignIn = false
+    @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var appleSignInDelegates: SignInWithAppleDelegate = SignInWithAppleDelegate()
+//        { success in
+//           if success {
+//                
+//               print("got success on content view 🤓")
+//               //self.needsToSignIn = false
+//           }else {
+//               print("did not get success on content view 🤓")
+//                
+//               //self.needsToSignIn = true
+//           }
+//       }
+    
+    var isLoggedIn: Bool {
+        get {
+           
+            return Auth.auth().currentUser != nil
+        }
+    }
+    
     var body: some View {
+        Group { if self.appleSignInDelegates.isLoggedIn == true  {
         TabView {
             IssuesTab()
                 .tabItem {
@@ -33,13 +57,36 @@ struct ContentView: View {
                     
                 
         }.onAppear {
-            self.performExistingAccountSetupFlows()
+            print("on appear content view 🤓")
+                
+             //self.performExistingAccountSetupFlows()
+             //self.peformAuthCheck()
+            
+            
+        }
+            }else {
+            LoginView()
+        }
         }
     }
     
     private func performExistingAccountSetupFlows() {
         
+//        appleSignInDelegates = SignInWithAppleDelegate() { success in
+//            if success {
+//
+//                print("got success on content view 🤓")
+//                self.needsToSignIn = false
+//            }else {
+//                print("did not get success on content view 🤓")
+//                self.needsToSignIn = true
+//            }
+//        }
+        
+        guard self.isLoggedIn == false else{return}
+        
         let nonce = self.appleSignInDelegates.randomNonceString()
+        appleSignInDelegates.currentNonce = nonce
         let appleRequest = ASAuthorizationAppleIDProvider().createRequest()
         appleRequest.nonce = self.appleSignInDelegates.sha256(nonce)
         
@@ -48,59 +95,63 @@ struct ContentView: View {
          //   ASAuthorizationPasswordProvider().createRequest()
         ]
         
-        performSignIn(using: requests)
+        //performSignIn(using: requests)
         
-    }
-    
-    private func performSignIn(using requests: [ASAuthorizationRequest]) {
-        
-        appleSignInDelegates = SignInWithAppleDelegate() { success in
-            if success {
-              
-                print("got success on loginView 🤓")
-                
-            }else {
-                print("did not get success on loginView 🤓")
-            }
-        }
         let controller = ASAuthorizationController(authorizationRequests: requests)
         controller.delegate = appleSignInDelegates
         controller.performRequests()
+        
     }
     
-    private func peformAuthCheck() {
-        let provider = ASAuthorizationAppleIDProvider()
-        
-        provider.getCredentialState(forUserID: "currentUserIdentifier") { (state, error) in
-            
-            switch state {
-            case .authorized :
-                    //credentials are valid
-                    print("credentials are valid 🤓")
-                break
-                
-            case .notFound :
-                    // credentials not found. Ask to Log In
-                    print("credentials not found 🤓")
-                break
-                
-            case .revoked :
-                    //credentials revoked. Log them out
-                break
-                
-            case .transferred :
-                
-                break
-                
-            default :
-                
-                break
-                
-            }
-            
-        }
-        
-    }
+//    private func performSignIn(using requests: [ASAuthorizationRequest]) {
+//
+//        let controller = ASAuthorizationController(authorizationRequests: requests)
+//        controller.delegate = appleSignInDelegates
+//        controller.performRequests()
+//    }
+    
+//    private func peformAuthCheck() {
+//        guard Auth.auth().currentUser == nil else{return}
+//
+//        let provider = ASAuthorizationAppleIDProvider()
+//
+//        provider.getCredentialState(forUserID: "currentUserIdentifier") { (state, error) in
+//
+//
+//            switch state {
+//            case .authorized :
+//                    //credentials are valid, no action needed
+//                    print("credentials are valid (content view)🤓")
+//
+//
+//                break
+//
+//            case .notFound :
+//                    // credentials not found. Ask to Log In
+//                    print("credentials not found (content view)🤓")
+//                    //self.needsToSignIn = true
+//                break
+//
+//            case .revoked :
+//                    //credentials revoked. Log them out
+//                //self.needsToSignIn = true
+//                break
+//
+//            case .transferred :
+//                    // not sure what this is. Ask them to log in
+//                //self.needsToSignIn = true
+//                print("credentials transferred 🤓")
+//                break
+//
+//            default :
+//                    // all other cases, ask them to log in
+//                break
+//
+//            }
+//
+//        }
+//
+//    }
 }
 
 struct ContentView_Previews: PreviewProvider {

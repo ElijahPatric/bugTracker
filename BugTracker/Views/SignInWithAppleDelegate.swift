@@ -11,15 +11,45 @@ import UIKit
 import AuthenticationServices
 import CryptoKit
 import Firebase
-class SignInWithAppleDelegate: NSObject {
+import SwiftUI
+class SignInWithAppleDelegate: NSObject, ObservableObject {
     
+    @Published var loginErrorOccurred = false
+    @Published var isLoggedIn = false
+    var handle: AuthStateDidChangeListenerHandle?
     var currentNonce: String?
-    private let signInSucceeded: (Bool) -> Void
+    var userID = "currentUserIdentifier"
+    //    private var signInSucceeded: (Bool) -> Void?
     
-    init(onSignedIn: @escaping (Bool) -> Void) {
-        self.signInSucceeded = onSignedIn
+//    init(onSignedIn: @escaping (Bool) -> Void) {
+//        self.signInSucceeded = onSignedIn
+//        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+//          print("listner is attached 🤓")
+//            if auth.currentUser == nil {
+//                print("user is nil")
+//                self.isLoggedIn = false
+//            }else {
+//                print("user is NOT nil")
+//                self.isLoggedIn = true
+//            }
+//        }
+//
+//    }
+    
+    override init() {
+        super.init()
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+          print("listner is attached 🤓")
+            if auth.currentUser == nil {
+                print("user is nil")
+                self.isLoggedIn = false
+            }else {
+                print("user is NOT nil")
+                self.isLoggedIn = true
+            }
+        }
+
     }
-    
 }
 
 extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
@@ -36,12 +66,16 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
             }
             guard let appleIDToken = appleIDCredential.identityToken else {
               print("Unable to fetch identity token 🤓")
+                self.isLoggedIn = false
               return
             }
+            
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
               print("Unable to serialize token string from data: \(appleIDToken.debugDescription) 🤓")
+                self.isLoggedIn = false
               return
             }
+            
             fireCredential = OAuthProvider.credential(withProviderID: "apple.com",
                                                       idToken: idTokenString,
             rawNonce: nonce)
@@ -74,7 +108,10 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        //called, among other cases, if cancel is selected
         print("Sign in with Apple errored: \(error) 🤓")
+        self.isLoggedIn = false
+//        self.signInSucceeded(false)
     }
     
     func signInWithExistingAccount(credential: ASAuthorizationAppleIDCredential, fireCredential: OAuthCredential? = nil) {
@@ -90,12 +127,15 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
             // your request to Apple.
                 
                 print("localized error description: \(error?.localizedDescription) 🤓")
-                self.signInSucceeded(false)
+ //               self.signInSucceeded(false)
+                self.loginErrorOccurred = true
+                self.isLoggedIn = false
             return
           }
           // User is signed in to Firebase with Apple.
           // ...
-            self.signInSucceeded(true)
+            self.isLoggedIn = true
+ //           self.signInSucceeded(true)
         }
         
     }
@@ -112,7 +152,8 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
             try keychain.store(userData)
         }catch {
             print("error saving to keychain 🤓")
-            self.signInSucceeded(false)
+            self.isLoggedIn = false
+            //self.signInSucceeded(false)
         }
         print("got past keychain code 🤓")
         //reach out to your web api and store credentials
@@ -124,12 +165,14 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
             // your request to Apple.
                 
                 print("localized error description: \(error?.localizedDescription) 🤓")
-                self.signInSucceeded(false)
+               // self.signInSucceeded(false)
+                self.isLoggedIn = false
             return
           }
           // User is signed in to Firebase with Apple.
           // ...
-            self.signInSucceeded(true)
+          //  self.signInSucceeded(true)
+            self.isLoggedIn = true
         }
         
     }
@@ -137,7 +180,7 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
     func signInWithUserPassword(credential: ASPasswordCredential) {
         
         
-        self.signInSucceeded(true)
+//        self.signInSucceeded(true)
     }
     
     func randomNonceString(length: Int = 32) -> String {
