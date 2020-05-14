@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import FirebaseFirestore
 struct CreateSprint: View {
     @Binding var isPresented: Bool
     @State private var title: String = ""
@@ -16,6 +16,8 @@ struct CreateSprint: View {
     var upperStartLimit: Date {
         return Calendar.current.date(byAdding: .day, value: -1, to: endDate)!
     }
+    let helper = IssueHelper(withListner:false)
+    
     var body: some View {
         NavigationView {
             Form {
@@ -34,7 +36,8 @@ struct CreateSprint: View {
                 }
                 Section {
                     Button(action: {
-                       
+                        self.saveSprint()
+                        self.isPresented = false
                         
                        
                         
@@ -43,9 +46,6 @@ struct CreateSprint: View {
                             Spacer()
                             Text("Create Sprint")
                                 .padding()
-                                
-                                    
-                                
                             Spacer()
                         }
                         
@@ -54,6 +54,20 @@ struct CreateSprint: View {
                 }
             }.navigationBarTitle("Create Sprint")
         }
+    }
+    func saveSprint() {
+        
+        let newSprint = sprint(
+            sprintID: 0,
+            duration: 0,
+            startTimestamp: Timestamp(date: self.startDate),
+            endTimestamp: Timestamp(date: self.endDate),
+            title: self.title,
+            description: "",
+            points: 0)
+        
+        helper.saveSprint(sprint: newSprint)
+        
     }
 }
 

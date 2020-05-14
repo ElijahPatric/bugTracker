@@ -171,7 +171,6 @@
 		CF4D747D2461E4AA003E25E8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				CF4D747924609B08003E25E8 /* SignInWithAppleDelegate.swift */,
 				CFBF430624380D8B00A75014 /* LoginView.swift */,
 				CFA5663B23ED0E0A00800681 /* ContentView.swift */,
 				CF4D7477246092E4003E25E8 /* SignInWithApple.swift */,
@@ -337,6 +336,7 @@
 		CFC593A124453EA200789F76 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
+				CF4D747924609B08003E25E8 /* SignInWithAppleDelegate.swift */,
 				CFA5663423ED0E0A00800681 /* AppDelegate.swift */,
 				CFA5663623ED0E0A00800681 /* SceneDelegate.swift */,
 			);

@@ -14,17 +14,8 @@ struct LoginView: View {
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var authSuccess = false
-    @ObservedObject var appleSignInDelegates: SignInWithAppleDelegate = SignInWithAppleDelegate()
-//        { success in
-//        if success {
-//
-//            print("got success on content view 🤓")
-//            //self.needsToSignIn = false
-//        }else {
-//            print("did not get success on content view 🤓")
-//            //self.needsToSignIn = true
-//        }
-//    }
+    @EnvironmentObject var appleSignInDelegates: SignInWithAppleDelegate
+
     
     var isLoggedIn: Bool {
         get {
@@ -92,21 +83,6 @@ struct LoginView: View {
     
     func showAppleLogin() {
         
-//        appleSignInDelegates = SignInWithAppleDelegate() { success in
-//            if success {
-//
-//                print("got success on loginView 🤓")
-//                self.appleSignInDelegates.loginErrorOccurred = false
-//                self.appleSignInDelegates.isLoggedIn = true
-//                self.authSuccess = true
-//
-//            }else {
-//                print("did not get success on loginView 🤓")
-//                self.appleSignInDelegates.loginErrorOccurred = true
-//                self.appleSignInDelegates.isLoggedIn = false
-//                self.authSuccess = false
-//            }
-//        }
         
         let nonce = self.appleSignInDelegates.randomNonceString()
         self.appleSignInDelegates.currentNonce = nonce
@@ -124,49 +100,7 @@ struct LoginView: View {
         controller.performRequests()
         
     }
-    
-//    private func performAuthCheck() {
-//
-//
-//        let provider = ASAuthorizationAppleIDProvider()
-//
-//        provider.getCredentialState(forUserID: "currentUserIdentifier") { (state, error) in
-//
-//
-//            switch state {
-//            case .authorized :
-//                    //credentials are valid, no action needed
-//                    self.appleSignInDelegates.loginErrorOccurred = false
-//                    print("credentials are valid (login view)🤓")
-//
-//                break
-//
-//            case .notFound :
-//                    // credentials not found. Ask to Log In
-//                    print("credentials not found (login view)🤓")
-//
-//                break
-//
-//            case .revoked :
-//                    //credentials revoked. Log them out
-//
-//                break
-//
-//            case .transferred :
-//                    // not sure what this is. Ask them to log in
-//
-//                print("credentials transferred (login view)🤓")
-//                break
-//
-//            default :
-//                    // all other cases, ask them to log in
-//                break
-//
-//            }
-//
-//        }
-//
-//    }
+  
 }
 
 struct LoginView_Previews: PreviewProvider {

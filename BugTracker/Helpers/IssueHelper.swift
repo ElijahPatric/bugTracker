@@ -13,6 +13,7 @@ import SwiftUI
 class IssueHelper: ObservableObject {
         
     @Published var tickets: [issue] = []
+    @Published var sprints: [sprint] = []
     
     init(withListner:Bool) {
         
@@ -48,11 +49,61 @@ class IssueHelper: ObservableObject {
                                      sprintID: nil,
                                      epicID: nil,
                                      status: issueStatus.init(rawValue: statusString) ?? issueStatus.open,
-                                     timestamp: Timestamp(date:Date()))
+                                     timestamp: docData["timestamp"] as! Timestamp)
                 
 
                 self.tickets.append(newIssue)
                 
+                
+            }
+            
+        }
+        
+    }
+    
+    init(withListnerForSprints:Bool) {
+        
+        guard withListnerForSprints == true else {return}
+        let db = Firestore.firestore()
+        
+        db.collection("Sprints").addSnapshotListener { documentSnapshot, error in
+            
+            guard let snapshot = documentSnapshot else {
+                print("error fetching document: \(error!)")
+                return
+            }
+            
+            let documents = snapshot.documents
+            guard documents.isEmpty == false else {
+                //array is empty
+                return
+            }
+            
+            self.sprints = []
+            
+            for document in documents {
+                let docData = document.data()
+                
+                var title = docData["title"] as? String
+                if title == nil {
+                    title = ""
+                }
+                
+                var description = docData["description"] as? String
+                
+                if description == nil {
+                    description = ""
+                }
+                
+                let newSprint = sprint(sprintID: docData["sprintID"] as! Int,
+                                       duration: docData["duration"] as! Int,
+                                       startTimestamp: docData["startTimestamp"] as! Timestamp,
+                                       endTimestamp: docData["endTimestamp"] as! Timestamp,
+                                       title: title!,
+                                       description: description!,
+                                       points: 0)
+                
+                self.sprints.append(newSprint)
                 
             }
             
@@ -112,7 +163,7 @@ class IssueHelper: ObservableObject {
     }
     
     func handleNoDataDescription() {
-        
+        print("no data description error 🤓")
     }
     
     func handleCreateIssueError() {
@@ -135,13 +186,16 @@ class IssueHelper: ObservableObject {
 extension IssueHelper: SprintHelper {
     
     func handleCreateSprintError() {
-        
+        print("sprint error 🤓")
     }
+ 
     
     func sprintDurationByDates(start:Date,end:Date) -> Int {
         
+        
+        
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: start, to: end)
+        let components = calendar.dateComponents([.day], from: start.startOfDay(), to: end.startOfDay())
         
         let days = components.day
         
@@ -154,10 +208,10 @@ extension IssueHelper: SprintHelper {
         
         docRef.getDocument { (document, error) in
             
-            if let document = document, document.exists {
+  //          if let document = document, document.exists {
                 
                 //get a new id number for this new sprint
-                let dataDescription = document.data() as? [String:Int]
+        let dataDescription = document!.data() as? [String:Int]
                 guard dataDescription != nil else {self.handleNoDataDescription();return}
                 var topNumber = dataDescription!["TopNumber"]!
                 
@@ -166,9 +220,15 @@ extension IssueHelper: SprintHelper {
                     topNumber = sprint.sprintID
                 }
                 
+                //get length of sprint
+                let startDate = sprint.startTimestamp.dateValue() as Date
+                let endDate = sprint.endTimestamp.dateValue() as Date
+                let duration = self.sprintDurationByDates(start: startDate, end: endDate)
+                
+                
                 let tempSprint: sprint = type(of: sprint).init(
                 sprintID: topNumber,
-                duration: 14,
+                duration: duration,
                 startTimestamp: Timestamp(date: Date()),
                 endTimestamp: Timestamp(date: Date()),
                 title: sprint.title,
@@ -185,11 +245,19 @@ extension IssueHelper: SprintHelper {
                 }
                
                 
-            } else {
-                print("Document does not exist")
-            }
+//            } else {
+//                print("Document does not exist")
+//            }
             
         }
+    }
+}
+extension Date {
+    func startOfDay() -> Date {
+        let calendar = Calendar.current
+        let newDate = calendar.startOfDay(for: self)
+        
+        return newDate
     }
 }
 

@@ -19,27 +19,12 @@ class SignInWithAppleDelegate: NSObject, ObservableObject {
     var handle: AuthStateDidChangeListenerHandle?
     var currentNonce: String?
     var userID = "currentUserIdentifier"
-    //    private var signInSucceeded: (Bool) -> Void?
-    
-//    init(onSignedIn: @escaping (Bool) -> Void) {
-//        self.signInSucceeded = onSignedIn
-//        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-//          print("listner is attached 🤓")
-//            if auth.currentUser == nil {
-//                print("user is nil")
-//                self.isLoggedIn = false
-//            }else {
-//                print("user is NOT nil")
-//                self.isLoggedIn = true
-//            }
-//        }
-//
-//    }
+ 
     
     override init() {
         super.init()
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-          print("listner is attached 🤓")
+          
             if auth.currentUser == nil {
                 print("user is nil")
                 self.isLoggedIn = false
@@ -57,7 +42,7 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
        
         /// ////////////// initial checks
-        print("got to did complete auth 🤓")
+       
         var fireCredential: OAuthCredential?
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             
@@ -65,13 +50,13 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
               fatalError("Invalid state: A login callback was received, but no login request was sent. 🤓")
             }
             guard let appleIDToken = appleIDCredential.identityToken else {
-              print("Unable to fetch identity token 🤓")
+              
                 self.isLoggedIn = false
               return
             }
             
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-              print("Unable to serialize token string from data: \(appleIDToken.debugDescription) 🤓")
+              
                 self.isLoggedIn = false
               return
             }
@@ -109,7 +94,7 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         //called, among other cases, if cancel is selected
-        print("Sign in with Apple errored: \(error) 🤓")
+        
         self.isLoggedIn = false
 //        self.signInSucceeded(false)
     }
@@ -118,7 +103,7 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
         
         //if this method is called, we should have a fully registered account
         // if we don't we can look in keychain for credentials and re-run setup
-        print("got to sign in with existing account 🤓")
+       
         // Sign in with Firebase.
         Auth.auth().signIn(with: fireCredential!) { (authResult, error) in
             if (error != nil) {
@@ -153,10 +138,10 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
         }catch {
             print("error saving to keychain 🤓")
             self.isLoggedIn = false
-            //self.signInSucceeded(false)
+            
         }
         print("got past keychain code 🤓")
-        //reach out to your web api and store credentials
+        
         // Sign in with Firebase.
         Auth.auth().signIn(with: fireCredential!) { (authResult, error) in
             if (error != nil) {
@@ -170,8 +155,7 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
             return
           }
           // User is signed in to Firebase with Apple.
-          // ...
-          //  self.signInSucceeded(true)
+        
             self.isLoggedIn = true
         }
         
@@ -179,8 +163,7 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
     
     func signInWithUserPassword(credential: ASPasswordCredential) {
         
-        
-//        self.signInSucceeded(true)
+
     }
     
     func randomNonceString(length: Int = 32) -> String {

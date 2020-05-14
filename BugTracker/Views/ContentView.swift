@@ -13,7 +13,7 @@ struct ContentView: View {
    
     @State var needsToSignIn = false
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var appleSignInDelegates: SignInWithAppleDelegate = SignInWithAppleDelegate()
+    @EnvironmentObject var appleSignInDelegates: SignInWithAppleDelegate 
 //        { success in
 //           if success {
 //                

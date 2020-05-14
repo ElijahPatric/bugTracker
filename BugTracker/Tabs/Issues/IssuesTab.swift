@@ -19,19 +19,7 @@ var listIssueType: issueType = .none
 @ObservedObject var helper = IssueHelper(withListner: true)
 
 @ObservedObject var appleSignInDelegates: SignInWithAppleDelegate = SignInWithAppleDelegate()
-//    { success in
-//              if success {
-//                   
-//                  print("got success on issues tab 🤓")
-//                  //self.needsToSignIn = false
-//              }else {
-//                  print("did not get success on issues tab 🤓")
-//                   
-//                  //self.needsToSignIn = true
-//              }
-//          }
-    
-  
+
     var body: some View {
 
         VStack {

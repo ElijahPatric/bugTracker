@@ -10,6 +10,9 @@ import SwiftUI
 
 struct SprintTab: View {
     @State var presentSprint = false
+    @State var selectedSprint: sprint?
+    @State var sprintIsSelected: Bool = false
+    @ObservedObject var helper = IssueHelper(withListnerForSprints: true)
     
     var body: some View {
         VStack {
@@ -26,6 +29,11 @@ struct SprintTab: View {
                     
             }
             Spacer()
+            List(helper.sprints, selection: $selectedSprint) { listSprint in
+                VStack {
+                    Text("\(listSprint.title ?? "no title")")
+                }
+            }
         }
     }
 }
