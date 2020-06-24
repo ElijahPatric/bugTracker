@@ -17,23 +17,22 @@ struct IssuesTab: View {
 var listIssueType: issueType = .none
 @State var loginPresented: Bool = false
 @ObservedObject var helper = IssueHelper(withListner: true)
-
 @ObservedObject var appleSignInDelegates: SignInWithAppleDelegate = SignInWithAppleDelegate()
+    
 
     var body: some View {
 
         VStack {
-            
-            ScrollView(.horizontal) {
                 HStack {
                     Button(action:{
                         self.createTicket.toggle()
-                    }) {
-                        Text("Create Ticket")
+                        
+                        }) {
+                        Text("Create issue")
                          .multilineTextAlignment(.center)
                         }.padding(.leading, CGFloat(8.0))
-                        .sheet(isPresented: $createTicket) { CreateTicket(isPresented: self.$createTicket)
-                    }
+                        .sheet(isPresented: $createTicket) { CreateTicket(isPresented: self.$createTicket)}
+                    Spacer()
                     Button(action: {
                         
                         let firebaseAuth = Auth.auth()
@@ -50,11 +49,9 @@ var listIssueType: issueType = .none
                     }
                    
                 }
-            }
-            
             
             Spacer()
-            
+     
             List(helper.tickets,selection: $selectedIssue) { listIssue in
                 VStack {
                     HStack {
@@ -71,29 +68,31 @@ var listIssueType: issueType = .none
                         .padding(.trailing, CGFloat(6.0))
                         
                     }
-                    if self.selectedIssue?.title! == listIssue.title {
+
+                }.contextMenu {
                     
-                        IssueActionOptions(
-                            editClosure: {
-                                print("f")
-                                self.issueIsSelected.toggle()
-                            })
+                    Button(action: {
+                        self.selectedIssue = listIssue
+                        self.issueIsSelected.toggle()
+                    }) {
+                        Text("Edit")
+                        Image(systemName: "pencil.circle")
                     }
-                }.onTapGesture {
-                    self.selectedIssue = listIssue
-  //                  self.issueIsSelected.toggle()
-                    
+                    Button(action: {
+                        self.helper.deleteIssue(issue: listIssue)
+                    }) {
+                        Text("Delete")
+                        Image(systemName: "trash.circle")
+                            
                     }
                 }
+
+            }.sheet(isPresented: self.$issueIsSelected) { EditTicket(editIssue: self.$selectedIssue,isPresented: self.$issueIsSelected)}
             HStack {
                 Spacer()
                 Text("issues: \(self.helper.tickets.count)")
                     
             }
-        }.sheet(isPresented: self.$issueIsSelected) { EditTicket(editIssue: self.$selectedIssue,isPresented: self.$issueIsSelected)
-            
-            
-            
         }
         
     }

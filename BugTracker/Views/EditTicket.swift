@@ -18,6 +18,7 @@ struct EditTicket: View {
     @State var description = ""
     @State var selectedTypeIndex = 0
     @State var selectedTypeString = ""
+    @State var selectedSprintIndex = -1
     @State var storyPointsString = ""
     @State var epic = ""
     @State var sprint = ""
@@ -35,7 +36,7 @@ struct EditTicket: View {
         }
     }
     @ObservedObject var helper = IssueHelper(withListner: false)
-    
+    @ObservedObject var sprintHelper = IssueHelper(withListnerForSprints: true)
     let issueTypesArray: [String] = issueType.allValues
     
     var body: some View {
@@ -83,9 +84,12 @@ struct EditTicket: View {
                     }
                     Section {
                         VStack {
-                            Picker(selection: $sprint, label: Text("Sprint")) {
-                                ForEach(0..<4) {_ in
-                                    Text("Sprints")
+                            if self.sprintHelper.sprints.count > 0 {
+                                Picker(selection: $selectedSprintIndex, label: Text("Sprint")) {
+                                    ForEach(0..<self.sprintHelper.sprints.count) { counter in
+                                        Text("\(self.sprintHelper.sprints[counter].title ?? "no title")")
+                                    }
+                                
                                 }
                             }
                         }
@@ -122,7 +126,7 @@ struct EditTicket: View {
     
         func saveTicket() {
             
-            let newTicket = issue(title: self.title,
+            var newTicket = issue(title: self.title,
                                     description: self.description,
                                     issueID: self.editIssue!.id,
                                     points: self.storyPoints,
@@ -133,28 +137,31 @@ struct EditTicket: View {
                                     status: .open,
                                     timestamp: self.editIssue!.timestamp)
             
-    //          helper.saveIssue(ticket: newTicket)
-            helper.saveIssue(ticket: newTicket,existingIssue: true)
+            if selectedSprintIndex != -1 && sprintHelper.sprints.isEmpty == false {
+                newTicket.sprintID = sprintHelper.sprints[self.selectedSprintIndex].sprintID
+            }
+            
+            sprintHelper.saveIssue(ticket: newTicket,existingIssue: true)
         }
 
 }
-        //////////////////
-    
 
 
-//struct EditTicket_Previews: PreviewProvider {
-//    @State static var isPresented = true
-//    static var previews: some View {
-//        EditTicket(editIssue: issue(title: "Preview Title",
-//                                    description: "Preview Description",
-//                                    issueID: 99,
-//                                    points: 2,
-//                                    assignee: nil,
-//                                    type: .feature,
-//                                    sprintID: nil,
-//                                    epicID: nil,
-//                                    status: .open,
-//                                    timestamp: Timestamp(date: Date())),
-//                   isPresented: $isPresented)
-//    }
-//}
+struct EditTicket_Previews: PreviewProvider {
+    @State static var isPresented = true
+    @State static var editIssue: issue? =
+        issue(title: "Preview Title",
+                         description: "Preview Description",
+                         issueID: 99,
+                         points: 2,
+                         assignee: nil,
+                         type: .feature,
+                         sprintID: nil,
+                         epicID: nil,
+                         status: .open,
+                         timestamp: Timestamp(date: Date()))
+                         //isPresented: $isPresented
+    static var previews: some View {
+        EditTicket(editIssue: $editIssue, isPresented: $isPresented)
+    }
+}

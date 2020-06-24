@@ -9,7 +9,7 @@
 import Foundation
 
 struct UserDataKeychain: Keychain {
-  // Make sure the account name doesn't match the bundle identifier!
+  
   var account = "com.ElijahPatric.BugTracker.Details"
   var service = "userIdentifier"
 

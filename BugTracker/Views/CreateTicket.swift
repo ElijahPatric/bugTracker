@@ -16,12 +16,10 @@ struct CreateTicket: View {
     @State var selectedTypeString = ""
     @State var storyPointsString = ""
     @State var epic = ""
-    @State var sprint = ""
     @State var isSelected = false
     @State private var scale: CGFloat = 1.2
-    
     @Binding var isPresented: Bool
-
+    @State var selectedSprintIndex = -1
     var storyPoints: Int {
         get {
             if let points = Int(self.storyPointsString) {
@@ -32,7 +30,7 @@ struct CreateTicket: View {
         }
     }
     let issueTypesArray: [String] = issueType.allValues
-    let helper = IssueHelper(withListner:false)
+    @ObservedObject var helper = IssueHelper(withListnerForSprints: true)
     
     var body: some View {
         VStack {
@@ -68,10 +66,15 @@ struct CreateTicket: View {
                     }
                     Section {
                         VStack {
-                            Picker(selection: $sprint, label: Text("Sprint")) {
-                                ForEach(0..<4) {_ in 
-                                    Text("Sprints")
+                            if self.helper.sprints.count > 0 {
+                                Picker(selection: $selectedSprintIndex, label: Text("Sprint")) {
+                                    ForEach(0..<self.helper.sprints.count) { counter in
+                                        Text("\(self.helper.sprints[counter].title ?? "no title")")
+                                        
+                                    }
                                 }
+                            }else {
+                                Text("No Sprints Available")
                             }
                         }
                     }
@@ -101,7 +104,7 @@ struct CreateTicket: View {
     
     func saveTicket() {
         
-        let newTicket = issue(title: self.title,
+        var newTicket = issue(title: self.title,
                                 description: self.description,
                                 issueID: 0,
                                 points: self.storyPoints,
@@ -111,6 +114,10 @@ struct CreateTicket: View {
                                 epicID: nil,
                                 status: .open,
                                 timestamp: Timestamp(date: Date()))
+        
+        if selectedSprintIndex != -1 && helper.sprints.isEmpty == false {
+            newTicket.sprintID = helper.sprints[self.selectedSprintIndex].sprintID
+        }
         
         helper.saveIssue(ticket: newTicket)
     }

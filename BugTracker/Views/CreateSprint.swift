@@ -16,7 +16,7 @@ struct CreateSprint: View {
     var upperStartLimit: Date {
         return Calendar.current.date(byAdding: .day, value: -1, to: endDate)!
     }
-    let helper = IssueHelper(withListner:false)
+    let helper = IssueHelper(withListnerForSprints: false)
     
     var body: some View {
         NavigationView {
@@ -56,7 +56,8 @@ struct CreateSprint: View {
         }
     }
     func saveSprint() {
-        
+        print("start date: \(self.startDate)")
+        print("end date: \(self.endDate)")
         let newSprint = sprint(
             sprintID: 0,
             duration: 0,

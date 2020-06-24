@@ -14,23 +14,26 @@ class IssueHelper: ObservableObject {
         
     @Published var tickets: [issue] = []
     @Published var sprints: [sprint] = []
+    @Published var issuesForSprint: [issue] = [] 
+    
+    let db = Firestore.firestore()
     
     init(withListner:Bool) {
         
         guard withListner == true else {return}
-        let db = Firestore.firestore()
+        //let db = Firestore.firestore()
         
-        db.collection("Tickets").addSnapshotListener { documentSnapshot, error in
+        db.collection("Tickets").order(by: "timestamp", descending: true).addSnapshotListener { documentSnapshot, error in
           guard let snapshot = documentSnapshot else {
             print("Error fetching document: \(error!)")
             return
           }
-          let documents = snapshot.documents
+            let documents = snapshot.documents
             guard documents.isEmpty == false else {
                 //array is empty
                 return
             }
- //           print("how many inits? 😎")
+ 
             self.tickets = []
             
             for document in documents {
@@ -53,20 +56,20 @@ class IssueHelper: ObservableObject {
                 
 
                 self.tickets.append(newIssue)
-                
-                
+ 
             }
             
         }
-        
+
     }
+
     
     init(withListnerForSprints:Bool) {
         
         guard withListnerForSprints == true else {return}
-        let db = Firestore.firestore()
+        //let db = Firestore.firestore()
         
-        db.collection("Sprints").addSnapshotListener { documentSnapshot, error in
+        db.collection("Sprints").order(by: "startTimestamp", descending: true).addSnapshotListener { documentSnapshot, error in
             
             guard let snapshot = documentSnapshot else {
                 print("error fetching document: \(error!)")
@@ -112,7 +115,7 @@ class IssueHelper: ObservableObject {
     }
 
     func saveIssue(ticket: issue, existingIssue: Bool = false) {
-        let db = Firestore.firestore()
+       // let db = Firestore.firestore()
         let docRef = db.collection("AppData").document("HighestTicketNumber")
         
         docRef.getDocument { (document, error) in
@@ -124,25 +127,32 @@ class IssueHelper: ObservableObject {
                 guard dataDescription != nil else {self.handleNoDataDescription();return}
                 var topNumber = dataDescription!["TopNumber"]!
                 
-                //if existing issue, use same id, otherwise it would make a new issue
+                //if existing issue, use same id, otherwise it would make a new issue on every edit
                 if existingIssue == true {
                     topNumber = ticket.issueID
                 }
                 
+                //if existing issue, use existing timestamp, otherwise use today's date
+                var timestamp = Timestamp(date: Date())
+                if existingIssue == true {
+                    timestamp = ticket.timestamp
+                }
+                
+                
                 let tempTicket = issue(title: ticket.title,
-                description: ticket.description,
-                issueID: topNumber,
-                points: ticket.points,
-                assignee: nil,
-                type: ticket.type,
-                sprintID: nil,
-                epicID: nil,
-                status: .open,
-                timestamp: Timestamp(date:Date()))
+                                       description: ticket.description,
+                                       issueID: topNumber,
+                                       points: ticket.points,
+                                       assignee: nil,
+                                       type: ticket.type,
+                                       sprintID: ticket.sprintID,
+                                       epicID: nil,
+                                       status: .open,
+                                       timestamp: timestamp)
                 
             do {
-              try db.collection("Tickets").document("\(tempTicket.issueID)").setData(from: tempTicket)
-              db.collection("AppData").document("HighestTicketNumber").setData(["TopNumber" : tempTicket.issueID + 1])
+                try self.db.collection("Tickets").document("\(tempTicket.issueID)").setData(from: tempTicket)
+                self.db.collection("AppData").document("HighestTicketNumber").setData(["TopNumber" : tempTicket.issueID + 1])
                 } catch {
                     
                     self.handleCreateIssueError()
@@ -156,11 +166,10 @@ class IssueHelper: ObservableObject {
         }
     }
     
-    func listenForUpdates() {
-        
-        
-        
+    func deleteIssue(issue:issue) {
+        self.db.collection("Tickets").document("\(issue.id)").delete()
     }
+    
     
     func handleNoDataDescription() {
         print("no data description error 🤓")
@@ -183,16 +192,24 @@ class IssueHelper: ObservableObject {
     }
     
 }
+// MARK: Sprint Helper Extension
 extension IssueHelper: SprintHelper {
     
     func handleCreateSprintError() {
         print("sprint error 🤓")
     }
+    
+    func shortStringFromTimestamp(timestamp: Timestamp) -> String {
+        let date = timestamp.dateValue() as Date
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM d, yyyy"
+        let dateString = formatter.string(from: date).lowercased()
+        
+        return dateString
+    }
  
     
     func sprintDurationByDates(start:Date,end:Date) -> Int {
-        
-        
         
         let calendar = Calendar.current
         let components = calendar.dateComponents([.day], from: start.startOfDay(), to: end.startOfDay())
@@ -201,14 +218,66 @@ extension IssueHelper: SprintHelper {
         
         return days!
     }
+
+    
+    func issuesForSprint(sprint: sprint) -> [issue] {
+    
+       
+            let handler = self.db.collection("Tickets").whereField("sprintID", isEqualTo: sprint.sprintID)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents in issuesForSprint func: \(err) 😖")
+                    
+                } else {
+                    
+                    self.issuesForSprint = []
+                    
+                    for document in querySnapshot!.documents {
+                        
+                        let result = Result {
+                            try document.data(as: issue.self)
+                        }
+                        switch result {
+                            case .success(let fIssue):
+                                if let fIssue = fIssue {
+                                // A `issue` value was successfully initialized from the DocumentSnapshot.
+                                    self.issuesForSprint.append(fIssue)
+                                } else {
+                                // A nil value was successfully initialized from the DocumentSnapshot,
+                                // or the DocumentSnapshot was nil.
+                                print("Document was not successfully initialized. IssuesForSprint func 🤨")
+                            }
+                            case .failure(let error):
+                                // value could not be initialized from the DocumentSnapshot.
+                                print("Error decoding city: \(error)")
+                        }
+                        
+                    }
+                  
+                    
+                }
+                  
+        }
+        
+        return performSprintIssueFetch(completionHandler: handler)
+        
+    }
+    
+    private func performSprintIssueFetch(completionHandler: Void) -> [issue] {
+        
+        completionHandler
+
+        
+        let arrayToReturn = self.issuesForSprint
+        return arrayToReturn
+    }
     
     func saveSprint(sprint: sprint, existingSprint: Bool = false) {
-        let db = Firestore.firestore()
-        let docRef = db.collection("AppData").document("HighestSprintNumber")
+      
+        let docRef = self.db.collection("AppData").document("HighestSprintNumber")
         
         docRef.getDocument { (document, error) in
             
-  //          if let document = document, document.exists {
                 
                 //get a new id number for this new sprint
         let dataDescription = document!.data() as? [String:Int]
@@ -229,26 +298,20 @@ extension IssueHelper: SprintHelper {
                 let tempSprint: sprint = type(of: sprint).init(
                 sprintID: topNumber,
                 duration: duration,
-                startTimestamp: Timestamp(date: Date()),
-                endTimestamp: Timestamp(date: Date()),
+                startTimestamp: Timestamp(date: startDate.startOfDay()),
+                endTimestamp: Timestamp(date: endDate.startOfDay()),
                 title: sprint.title,
                 description: sprint.description,
                 points: sprint.points)
                 
                 do {
                     
-                  try db.collection("Sprints").document("\(tempSprint.sprintID)").setData(from: tempSprint)
-                    db.collection("AppData").document("HighestSprintNumber").setData(["TopNumber" : tempSprint.sprintID + 1])
+                    try self.db.collection("Sprints").document("\(tempSprint.sprintID)").setData(from: tempSprint)
+                    self.db.collection("AppData").document("HighestSprintNumber").setData(["TopNumber" : tempSprint.sprintID + 1])
                     
                 } catch {
                     self.handleCreateSprintError()
                 }
-               
-                
-//            } else {
-//                print("Document does not exist")
-//            }
-            
         }
     }
 }
